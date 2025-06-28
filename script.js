@@ -1,4 +1,3 @@
-
 const prompts = [
   "What are you truly feeling right now?",
   "What’s something you keep postponing?",
@@ -86,4 +85,13 @@ function updateCountdown() {
   const minutes = Math.floor(timeLeft / 60).toString().padStart(2, '0');
   const seconds = (timeLeft % 60).toString().padStart(2, '0');
   document.getElementById('countdown').textContent = `${minutes}:${seconds}`;
+}
+
+// 🎵 Music Selector Logic
+function changeTrack(url) {
+  const player = document.getElementById("audioPlayer");
+  if (url) {
+    player.src = url;
+    player.play();
+  }
 }
