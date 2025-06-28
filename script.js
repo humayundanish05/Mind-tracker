@@ -95,3 +95,16 @@ function changeTrack(url) {
     player.play();
   }
 }
+
+// 🎚 Volume control for direct audio player
+document.addEventListener("DOMContentLoaded", function () {
+  const audio = document.getElementById("audioPlayer");
+  const slider = document.getElementById("volumeSlider");
+
+  if (audio && slider) {
+    audio.volume = slider.value;
+    slider.addEventListener("input", () => {
+      audio.volume = slider.value;
+    });
+  }
+});
