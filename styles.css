@@ -77,6 +77,17 @@ button:hover {
   background-color: #324a78;
 }
 
+.volume-control {
+  margin-top: 15px;
+}
+.volume-control input[type="range"] {
+  width: 60%;
+  margin-left: 10px;
+}
+.volume-control label {
+  color: #ccc;
+  font-size: 14px;
+}
 .footer {
   text-align: center;
   padding: 20px;
