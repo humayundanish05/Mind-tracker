@@ -86,7 +86,21 @@
     
     
      </div>
-  <script src="script.js"></script>
+  <script // 🎚 Volume control for direct audio player
+window.addEventListener("DOMContentLoaded", function () {
+  const audio = document.getElementById("audioPlayer");
+  const slider = document.getElementById("volumeSlider");
+
+  // Set initial volume
+  if (audio && slider) {
+    audio.volume = parseFloat(slider.value);
+
+    // Update volume when slider changes
+    slider.addEventListener("input", function () {
+      audio.volume = parseFloat(this.value);
+    });
+  }
+});></script>
   <footer class="footer">
   <p>Made with 🌌 by <strong>Humayun Danish</strong></p>
   </footer>
