@@ -97,14 +97,17 @@ function changeTrack(url) {
 }
 
 // 🎚 Volume control for direct audio player
-document.addEventListener("DOMContentLoaded", function () {
+window.addEventListener("DOMContentLoaded", function () {
   const audio = document.getElementById("audioPlayer");
   const slider = document.getElementById("volumeSlider");
 
+  // Set initial volume
   if (audio && slider) {
-    audio.volume = slider.value;
-    slider.addEventListener("input", () => {
-      audio.volume = slider.value;
+    audio.volume = parseFloat(slider.value);
+
+    // Update volume when slider changes
+    slider.addEventListener("input", function () {
+      audio.volume = parseFloat(this.value);
     });
   }
 });
