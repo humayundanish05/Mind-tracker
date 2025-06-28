@@ -76,3 +76,15 @@ button:hover {
   outline: none;
   background-color: #324a78;
 }
+
+.footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  color: #aaa;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 40px;
+}
+.footer strong {
+  color: #ffffff;
+}
