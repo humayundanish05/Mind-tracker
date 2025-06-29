@@ -1,76 +1,59 @@
-// 💭 Urdu Reflection Prompts
+// Urdu Prompts
 const prompts = [
-  "اس لمحے تم حقیقتاً کیا محسوس کر رہے ہو؟",
-  "کون سا کام ہے جو تم بار بار ٹالتے جا رہے ہو؟",
-  "کون ہے جسے تم یاد کرتے ہو، مگر کبھی بتایا نہیں؟",
-  "زندگی کا احساس تمہیں کب اور کیسے ہوتا ہے؟",
-  "ایسا کیا ہے جس سے تم جذباتی طور پر نظریں چرا رہے ہو؟",
-  "آخری بار کب کسی نے تمہیں دل سے سمجھا تھا؟",
-  "کون سی یاد تمہیں سکون دیتی ہے؟"
+  "آپ اس وقت واقعی کیا محسوس کر رہے ہیں؟",
+  "ایسی کون سی چیز ہے جسے آپ مسلسل مؤخر کر رہے ہیں؟",
+  "آپ کس کو یاد کرتے ہیں لیکن بتایا نہیں؟",
+  "کیا چیز آپ کو زندہ محسوس کرواتی ہے؟",
+  "آپ جذباتی طور پر کس چیز سے بچ رہے ہیں؟",
+  "آخری بار کب کسی نے آپ کو واقعی سمجھا؟",
+  "کون سی یاد آپ کو سکون دیتی ہے؟"
 ];
 
-// 🔐 Urdu Secrets
+// Urdu Secrets
 const secrets = [
-  "میں اکثر چپکے سے روتا ہوں جب کوئی آس پاس نہیں ہوتا۔",
-  "میں اب بھی برسوں پرانی کسی شخصیت کے بارے میں سوچتا ہوں۔",
-  "میں مضبوط دکھائی دیتا ہوں، مگر اندر سے کھویا ہوا ہوں۔",
-  "مجھے یہ ڈر ہے کہ لوگ مجھے بھول جائیں گے۔",
-  "میں وہ پیغامات لکھتا ہوں جو کبھی بھیجتا نہیں۔"
+  "میں اکثر اکیلا روتا ہوں۔",
+  "ابھی بھی ماضی کی ایک یاد دل میں ہے۔",
+  "میں مضبوط دکھائی دیتا ہوں، مگر اندر سے بکھرا ہوا ہوں۔",
+  "مجھے بھول جانے کا خوف ہے۔",
+  "میں اکثر پیغامات لکھتا ہوں جو کبھی نہیں بھیجتا۔"
 ];
 
-// 💖 Urdu Affirmations
+// Urdu Affirmations
 const affirmations = [
-  "تم کافی ہو، جیسے ہو ویسے مکمل ہو۔",
+  "آپ کافی ہیں، جیسے ہیں ویسے ہی۔",
   "یہ لمحہ بھی گزر جائے گا۔",
-  "تم اپنی سوچ سے کہیں زیادہ مضبوط ہو۔",
-  "کبھی کبھی کھو جانا بھی ٹھیک ہوتا ہے۔",
-  "تمہیں چاہا جاتا ہے، چاہے تمہیں ایسا محسوس نہ ہو۔"
+  "آپ اپنی سوچ سے زیادہ مضبوط ہیں۔",
+  "کبھی کبھی کھو جانا بھی ٹھیک ہے۔",
+  "آپ محبوب ہیں، چاہے آپ کو محسوس نہ ہو۔"
 ];
 
-// 🎭 Mood Set
 function setMood(emoji) {
-  document.getElementById('mood-result').textContent = `آپ کا موجودہ موڈ: ${emoji}`;
+  document.getElementById('mood-result').textContent = `آپ کا موڈ: ${emoji}`;
 }
 
-// 💭 Random Reflection Prompt
 function newPrompt() {
   const random = prompts[Math.floor(Math.random() * prompts.length)];
-  const promptElement = document.getElementById('prompt');
-  promptElement.textContent = random;
-  promptElement.setAttribute("dir", "rtl");
-  promptElement.style.textAlign = "right";
+  document.getElementById('prompt').textContent = random;
 }
 
-// 🔐 Secret Sharing
 function sendSecret() {
   const userSecret = document.getElementById('userSecret').value.trim();
   const random = secrets[Math.floor(Math.random() * secrets.length)];
-  const output = document.getElementById('randomSecret');
-  output.setAttribute("dir", "rtl");
-  output.style.textAlign = "right";
-  output.textContent = userSecret ? `خاموش خلا سے ایک راز: “${random}”` : '';
+  document.getElementById('randomSecret').textContent = userSecret ? `راز کی دنیا سے: “${random}”` : '';
 }
 
-// 💖 Affirmation Generator
 function showAffirmation() {
   const random = affirmations[Math.floor(Math.random() * affirmations.length)];
-  const output = document.getElementById('affirmation');
-  output.setAttribute("dir", "rtl");
-  output.style.textAlign = "right";
-  output.textContent = random;
+  document.getElementById('affirmation').textContent = random;
 }
 
-// 📝 Journal Save
 function saveJournal() {
   const content = document.getElementById('journalBox').value;
   localStorage.setItem('innerverseJournal', content);
-  const status = document.getElementById('saveStatus');
-  status.textContent = 'جرنل کامیابی سے محفوظ ہو گیا ہے۔';
-  status.setAttribute("dir", "rtl");
-  status.style.textAlign = "right";
+  document.getElementById('saveStatus').textContent = 'جرنل مقامی طور پر محفوظ ہوگیا ہے۔';
 }
 
-// 🧘 Meditation Timer Logic
+// 🧘 Timer Logic
 let timerInterval;
 let timeLeft = 0;
 
@@ -86,7 +69,7 @@ function startTimer() {
     updateCountdown();
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
-      alert("⏳ وقت ختم ہو گیا! اب سکون سے سانس لو۔");
+      alert("⏳ وقت مکمل ہوا! سکون سے سانس لیں۔");
     }
   }, 1000);
 }
@@ -107,17 +90,8 @@ function updateCountdown() {
   document.getElementById('countdown').textContent = `${minutes}:${seconds}`;
 }
 
-// 🎵 Music Track Change
-function changeTrack(url) {
-  const player = document.getElementById("audioPlayer");
-  if (url) {
-    player.src = url;
-    player.play();
-  }
-}
-
-// 🎚 Volume Slider
-window.addEventListener("DOMContentLoaded", function () {
+// 🎵 Volume Control
+window.addEventListener("DOMContentLoaded", () => {
   const audio = document.getElementById("audioPlayer");
   const slider = document.getElementById("volumeSlider");
 
@@ -127,4 +101,31 @@ window.addEventListener("DOMContentLoaded", function () {
       audio.volume = parseFloat(this.value);
     });
   }
+
+  // 🔘 Dark/Light Mode Toggle
+  const toggle = document.getElementById("modeToggle");
+  toggle.addEventListener("change", () => {
+    document.body.classList.toggle("light-mode", toggle.checked);
+  });
+
+  // 🟦 Scroll Progress Bar
+  window.addEventListener("scroll", () => {
+    const scrollBar = document.getElementById("scrollBar");
+    const totalHeight = document.body.scrollHeight - window.innerHeight;
+    const progress = (window.scrollY / totalHeight) * 100;
+    scrollBar.style.width = `${progress}%`;
+  });
+
+  // 🔮 Section Animation on Scroll
+  const sections = document.querySelectorAll(".section");
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animationDelay = "0.1s";
+        entry.target.classList.add("visible");
+      }
+    });
+  }, { threshold: 0.2 });
+
+  sections.forEach(section => observer.observe(section));
 });
