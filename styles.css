@@ -1,4 +1,4 @@
-/* ✅ Urdu Font & Base Theme */
+/* Urdu Font & Base Theme */
 body {
   font-family: 'Noto Nastaliq Urdu', serif;
   background: radial-gradient(circle at top left, #1a1a2e, #16213e);
@@ -10,7 +10,7 @@ body {
   transition: background 0.4s, color 0.4s;
 }
 
-/* ✅ Light Mode Styling */
+/* Light Mode Styling */
 body.light-mode {
   background: #f2f2f2;
   color: #222;
@@ -28,7 +28,6 @@ body.light-mode button:hover {
   background: #007b83;
 }
 
-/* ✅ Layout */
 .container {
   max-width: 800px;
   margin: auto;
@@ -53,7 +52,7 @@ body.light-mode button:hover {
   }
 }
 
-/* ✅ Textarea */
+/* Textarea */
 textarea {
   width: 100%;
   padding: 10px;
@@ -64,7 +63,7 @@ textarea {
   direction: rtl;
 }
 
-/* ✅ Buttons (original color + subtle diamond glow) */
+/* Buttons with strong diamond glow + pulse */
 button {
   padding: 10px 20px;
   margin-top: 10px;
@@ -73,40 +72,41 @@ button {
   border-radius: 8px;
   color: white;
   cursor: pointer;
+  animation: diamondPulse 1.6s infinite;
+  box-shadow: 0 0 10px rgba(185, 242, 255, 0.6);
   transition: all 0.3s ease;
 }
 
 button:hover {
-  box-shadow: 0 0 10px rgba(185, 242, 255, 0.4); /* diamond glow */
+  box-shadow: 0 0 25px 10px rgba(185, 242, 255, 0.95);
 }
 
-/* ✅ Mood Button */
 .mood-options button {
   font-size: 24px;
   margin: 5px;
   padding: 10px;
 }
 
-/* ✅ Audio Player - strong diamond glow + pulse */
+/* Audio Player with strong diamond glow + pulse */
 #audioPlayer {
   width: 100%;
   max-width: 100%;
   height: 40px;
   border-radius: 10px;
   background-color: #1f4068;
-  box-shadow: 0 0 15px 5px rgba(185, 242, 255, 0.8); /* intense diamond */
+  box-shadow: 0 0 15px 5px rgba(185, 242, 255, 0.8);
   outline: none;
   margin-top: 15px;
   animation: diamondPulse 1.6s infinite;
 }
 
-/* ✅ Countdown Timer */
+/* Countdown */
 #countdown {
   font-size: 2em;
   margin: 10px 0;
 }
 
-/* ✅ Volume */
+/* Volume Control */
 .volume-control {
   margin-top: 15px;
 }
@@ -119,7 +119,7 @@ button:hover {
   font-size: 14px;
 }
 
-/* ✅ Footer */
+/* Footer */
 .footer {
   text-align: center;
   padding: 20px;
@@ -132,7 +132,7 @@ button:hover {
   color: #ffffff;
 }
 
-/* ✅ Light/Dark Toggle */
+/* Toggle Switch */
 .toggle-container {
   position: fixed;
   top: 10px;
@@ -185,7 +185,7 @@ input:checked + .slider:before {
   transform: translateX(-22px);
 }
 
-/* ✅ Scroll Progress Bar */
+/* Scroll Progress Bar */
 #scrollBar {
   position: fixed;
   top: 0;
@@ -197,7 +197,7 @@ input:checked + .slider:before {
   transition: width 0.25s ease-out;
 }
 
-/* ✅ Diamond Pulse Animation */
+/* Diamond Pulse Animation */
 @keyframes diamondPulse {
   0% {
     box-shadow: 0 0 10px rgba(185, 242, 255, 0.6);
