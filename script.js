@@ -47,9 +47,41 @@ function saveJournal() {
   document.getElementById('saveStatus').textContent = 'جرنل مقامی طور پر محفوظ ہوگیا ہے۔';
 }
 
-// 🧘 Timer Logic
+// 🧘 Timer + Breathing Cycle
+
 let timerInterval;
 let timeLeft = 0;
+let breathingStarted = false;
+
+const affirmations = {
+  inhale: ["آپ محفوظ ہیں۔", "آپ کافی ہیں جیسے ہیں۔", "روشنی آپ کے اندر ہے۔"],
+  hold: ["یہ لمحہ آپ کا ہے۔", "ابھی بس محسوس کریں۔", "خاموشی میں سکون ہے۔"],
+  exhale: ["جانے دیں...", "سکون ہے آپ میں۔", "پریشانیاں ہوا کی طرح اڑ رہی ہیں۔"]
+};
+
+const box = document.getElementById("breath-box");
+
+function startBreathingCycle() {
+  if (!box) return;
+
+  const inhaleText = affirmations.inhale[Math.floor(Math.random() * affirmations.inhale.length)];
+  box.textContent = inhaleText;
+  box.className = 'phase-inhale';
+
+  setTimeout(() => {
+    const holdText = affirmations.hold[Math.floor(Math.random() * affirmations.hold.length)];
+    box.textContent = holdText;
+    box.className = 'phase-hold';
+
+    setTimeout(() => {
+      const exhaleText = affirmations.exhale[Math.floor(Math.random() * affirmations.exhale.length)];
+      box.textContent = exhaleText;
+      box.className = 'phase-exhale';
+
+      setTimeout(startBreathingCycle, 6000);
+    }, 4000);
+  }, 4000);
+}
 
 function startTimer() {
   const input = parseInt(document.getElementById('timeInput').value);
@@ -59,12 +91,18 @@ function startTimer() {
   timeLeft = input * 60;
   updateCountdown();
 
+  if (!breathingStarted) {
+    breathingStarted = true;
+    startBreathingCycle();
+  }
+
   timerInterval = setInterval(() => {
     timeLeft--;
     updateCountdown();
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
       alert("⏳ وقت مکمل ہوا! سکون سے سانس لیں۔");
+      breathingStarted = false;
     }
   }, 1000);
 }
@@ -77,6 +115,7 @@ function resetTimer() {
   clearInterval(timerInterval);
   timeLeft = 0;
   updateCountdown();
+  breathingStarted = false;
 }
 
 function updateCountdown() {
@@ -84,7 +123,6 @@ function updateCountdown() {
   const seconds = (timeLeft % 60).toString().padStart(2, '0');
   document.getElementById('countdown').textContent = `${minutes}:${seconds}`;
 }
-
 // 🎵 Volume Control + Initializations
 window.addEventListener("DOMContentLoaded", () => {
   const audio = document.getElementById("audioPlayer");
