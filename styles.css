@@ -83,22 +83,28 @@ button:hover {
   padding: 10px;
 }
 
-/* Music Player Styling */
+/* 🎵 Music Player Styling with Orange Pulse */
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 25px 8px rgba(255, 165, 0, 0.9);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+  }
+}
+
 #audioPlayer {
   width: 100%;
   max-width: 100%;
   height: 40px;
   border-radius: 10px;
   background-color: #1f4068;
-  box-shadow: 0 0 10px rgba(0, 173, 181, 0.3);
   outline: none;
   margin-top: 15px;
-  transition: box-shadow 0.3s ease;
-}
-#audioPlayer:hover {
-  box-shadow: 0 0 25px 5px rgba(0, 255, 255, 0.8);
-  transition: box-shadow 0.3s ease;
-}
+  animation: pulseGlow 1.5s infinite;
 }
 
 #countdown {
@@ -106,7 +112,7 @@ button:hover {
   margin: 10px 0;
 }
 
-/* Volume Control */
+/* 🎚 Volume Control */
 .volume-control {
   margin-top: 15px;
 }
@@ -119,20 +125,20 @@ button:hover {
   font-size: 14px;
 }
 
-/* Footer */
+/* 🦶 Footer */
 .footer {
   text-align: center;
   padding: 20px;
   font-size: 14px;
   color: #aaa;
-  border-top: 1px solid rgba(255, 165, 0, 0.8;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   margin-top: 40px;
 }
 .footer strong {
   color: #ffffff;
 }
 
-/* Light/Dark Mode Toggle Switch */
+/* 🌓 Light/Dark Toggle Switch */
 .toggle-container {
   position: fixed;
   top: 10px;
@@ -187,7 +193,7 @@ input:checked + .slider:before {
   transform: translateX(-22px);
 }
 
-/* Scroll Progress Bar */
+/* 📈 Scroll Progress Bar */
 #scrollBar {
   position: fixed;
   top: 0;
@@ -197,20 +203,4 @@ input:checked + .slider:before {
   z-index: 9999;
   width: 0%;
   transition: width 0.25s ease-out;
-  }
-
-@keyframes pulseGlow {
-  0% {
-    box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 25px 8px rgba(255, 165, 0, 0.9);
-  }
-  100% {
-    box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
-  }
-}
-
-#audioPlayer:hover {
-  animation: pulseGlow 1.5s infinite;
 }
