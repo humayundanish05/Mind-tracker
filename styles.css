@@ -198,3 +198,19 @@ input:checked + .slider:before {
   width: 0%;
   transition: width 0.25s ease-out;
   }
+
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 25px 8px rgba(255, 165, 0, 0.9);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+  }
+}
+
+#audioPlayer:hover {
+  animation: pulseGlow 1.5s infinite;
+}
