@@ -200,6 +200,11 @@ input:checked + .slider:before {
   transition: width 0.25s ease-out;
 }
 
+button.active-glow {
+  animation: none; /* or pulse if needed */
+  transition: box-shadow 0.3s ease;
+}
+
 /* Diamond Pulse Animation */
 @keyframes diamondPulse {
   0% {
