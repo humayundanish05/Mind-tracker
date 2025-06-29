@@ -135,6 +135,7 @@ function updateCountdown() {
 
 // 🎵 Volume Control + Other Initializers
 
+
 window.addEventListener("DOMContentLoaded", () => {
   const audio = document.getElementById("audioPlayer");
   const slider = document.getElementById("volumeSlider");
