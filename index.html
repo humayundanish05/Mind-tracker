@@ -6,6 +6,33 @@
   <title>Innerverse 🌌</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    #breath-box {
+      padding: 30px 50px;
+      border-radius: 20px;
+      background-color: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 0 30px 10px rgba(185, 242, 255, 0.4);
+      font-size: 1.6em;
+      transition: all 0.5s ease-in-out;
+      animation: fadeIn 2s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .phase-inhale {
+      color: #7fffd4;
+      box-shadow: 0 0 30px 10px rgba(127, 255, 212, 0.5);
+    }
+    .phase-hold {
+      color: #ffeb3b;
+      box-shadow: 0 0 30px 10px rgba(255, 235, 59, 0.5);
+    }
+    .phase-exhale {
+      color: #ff6f61;
+      box-shadow: 0 0 30px 10px rgba(255, 111, 97, 0.5);
+    }
+  </style>
 </head>
 <body>
 
@@ -78,7 +105,7 @@
       <button onclick="resetTimer()">ری سیٹ</button>
     </section>
 
-    <!-- Music Player -->
+    <!-- 🎶 Music Player -->
     <section class="section music">
       <h2>🎶 روح کی پرواز</h2>
       <audio id="audioPlayer" controls>
@@ -89,12 +116,52 @@
         <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
       </div>
     </section>
+
+    <!-- 🌬️ Breathing Meditation Section -->
+    <section class="section breathing">
+      <h2>🌬️ سانس لینے کا عمل</h2>
+      <div id="breath-box">آئیے، شروع کرتے ہیں...</div>
+    </section>
   </div>
 
   <footer class="footer">
     <p>🌌 تخلیق کردہ: <strong>Humayun Danish</strong></p>
   </footer>
 
+  <!-- Existing Scripts -->
   <script src="script.js"></script>
+
+  <!-- 🌈 Breathing Script -->
+  <script>
+    const affirmations = {
+      inhale: ["آپ محفوظ ہیں۔", "آپ کافی ہیں جیسے ہیں۔", "روشنی آپ کے اندر ہے۔"],
+      hold: ["یہ لمحہ آپ کا ہے۔", "ابھی بس محسوس کریں۔", "خاموشی میں سکون ہے۔"],
+      exhale: ["جانے دیں...", "سکون ہے آپ میں۔", "پریشانیاں ہوا کی طرح اڑ رہی ہیں۔"]
+    };
+
+    const box = document.getElementById("breath-box");
+
+    function startBreathingCycle() {
+      const inhaleText = affirmations.inhale[Math.floor(Math.random() * affirmations.inhale.length)];
+      box.textContent = inhaleText;
+      box.className = 'phase-inhale';
+
+      setTimeout(() => {
+        const holdText = affirmations.hold[Math.floor(Math.random() * affirmations.hold.length)];
+        box.textContent = holdText;
+        box.className = 'phase-hold';
+
+        setTimeout(() => {
+          const exhaleText = affirmations.exhale[Math.floor(Math.random() * affirmations.exhale.length)];
+          box.textContent = exhaleText;
+          box.className = 'phase-exhale';
+
+          setTimeout(startBreathingCycle, 6000);
+        }, 4000);
+      }, 4000);
+    }
+
+    setTimeout(startBreathingCycle, 1000);
+  </script>
 </body>
 </html>
