@@ -8,19 +8,22 @@ const prompts = [
   "آخری بار کب کسی نے آپ کو واقعی سمجھا؟",
   "کون سی یاد آپ کو سکون دیتی ہے؟"
 ];
+
 const secrets = [
   "میں اکثر اکیلا روتا ہوں۔",
   "ابھی بھی ماضی کی ایک یاد دل میں ہے۔",
   "میں مضبوط دکھائی دیتا ہوں، مگر اندر سے بکھرا ہوا ہوں۔",
   "مجھے بھول جانے کا خوف ہے۔"
 ];
-const affirmations = [
+
+const affirmationList = [
   "آپ کافی ہیں، جیسے ہیں ویسے ہی۔",
   "یہ لمحہ بھی گزر جائے گا۔",
   "آپ اپنی سوچ سے زیادہ مضبوط ہیں۔",
   "کبھی کبھی کھو جانا بھی ٹھیک ہے۔"
 ];
 
+// Mood & Prompts
 function setMood(emoji) {
   document.getElementById('mood-result').textContent = `آپ کا موڈ: ${emoji}`;
 }
@@ -37,7 +40,7 @@ function sendSecret() {
 }
 
 function showAffirmation() {
-  const random = affirmations[Math.floor(Math.random() * affirmations.length)];
+  const random = affirmationList[Math.floor(Math.random() * affirmationList.length)];
   document.getElementById('affirmation').textContent = random;
 }
 
@@ -48,33 +51,31 @@ function saveJournal() {
 }
 
 // 🧘 Timer + Breathing Cycle
-
 let timerInterval;
 let timeLeft = 0;
 let breathingStarted = false;
 
-const affirmations = {
+const breathingAffirmations = {
   inhale: ["آپ محفوظ ہیں۔", "آپ کافی ہیں جیسے ہیں۔", "روشنی آپ کے اندر ہے۔"],
   hold: ["یہ لمحہ آپ کا ہے۔", "ابھی بس محسوس کریں۔", "خاموشی میں سکون ہے۔"],
   exhale: ["جانے دیں...", "سکون ہے آپ میں۔", "پریشانیاں ہوا کی طرح اڑ رہی ہیں۔"]
 };
 
-const box = document.getElementById("breath-box");
-
 function startBreathingCycle() {
+  const box = document.getElementById("breath-box");
   if (!box) return;
 
-  const inhaleText = affirmations.inhale[Math.floor(Math.random() * affirmations.inhale.length)];
+  const inhaleText = breathingAffirmations.inhale[Math.floor(Math.random() * breathingAffirmations.inhale.length)];
   box.textContent = inhaleText;
   box.className = 'phase-inhale';
 
   setTimeout(() => {
-    const holdText = affirmations.hold[Math.floor(Math.random() * affirmations.hold.length)];
+    const holdText = breathingAffirmations.hold[Math.floor(Math.random() * breathingAffirmations.hold.length)];
     box.textContent = holdText;
     box.className = 'phase-hold';
 
     setTimeout(() => {
-      const exhaleText = affirmations.exhale[Math.floor(Math.random() * affirmations.exhale.length)];
+      const exhaleText = breathingAffirmations.exhale[Math.floor(Math.random() * breathingAffirmations.exhale.length)];
       box.textContent = exhaleText;
       box.className = 'phase-exhale';
 
@@ -123,7 +124,8 @@ function updateCountdown() {
   const seconds = (timeLeft % 60).toString().padStart(2, '0');
   document.getElementById('countdown').textContent = `${minutes}:${seconds}`;
 }
-// 🎵 Volume Control + Initializations
+
+// 🎵 Volume + UI Initializations
 window.addEventListener("DOMContentLoaded", () => {
   const audio = document.getElementById("audioPlayer");
   const slider = document.getElementById("volumeSlider");
@@ -161,16 +163,16 @@ window.addEventListener("DOMContentLoaded", () => {
   }, { threshold: 0.2 });
   sections.forEach(section => observer.observe(section));
 
-  // 🌈 Button Glow with Random Color
+  // 🌈 Button Glow Random Color
   function getRandomGlowColor() {
     const colors = [
-      'rgba(255, 99, 132, 0.8)',   // pink
-      'rgba(54, 162, 235, 0.8)',   // blue
-      'rgba(255, 206, 86, 0.8)',   // yellow
-      'rgba(75, 192, 192, 0.8)',   // aqua
-      'rgba(153, 102, 255, 0.8)',  // purple
-      'rgba(255, 159, 64, 0.8)',   // orange
-      'rgba(0, 255, 140, 0.8)'     // green
+      'rgba(255, 99, 132, 0.8)',
+      'rgba(54, 162, 235, 0.8)',
+      'rgba(255, 206, 86, 0.8)',
+      'rgba(75, 192, 192, 0.8)',
+      'rgba(153, 102, 255, 0.8)',
+      'rgba(255, 159, 64, 0.8)',
+      'rgba(0, 255, 140, 0.8)'
     ];
     return colors[Math.floor(Math.random() * colors.length)];
   }
@@ -181,7 +183,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
     btn.addEventListener("click", () => {
       const color = getRandomGlowColor();
-
       btn.classList.remove("active-glow");
       void btn.offsetWidth;
 
