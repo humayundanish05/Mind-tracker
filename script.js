@@ -175,13 +175,35 @@ window.addEventListener("DOMContentLoaded", () => {
   sections.forEach(section => observer.observe(section));
 
   // 🎯 Add glow effect to buttons on click only (except audio player)
-  const allButtons = document.querySelectorAll("button");
-  allButtons.forEach(btn => {
-    if (btn.closest("#audioPlayer")) return; // Skip if inside audio
+  function getRandomGlowColor() {
+  const colors = [
+    'rgba(255, 99, 132, 0.8)',   // pink
+    'rgba(54, 162, 235, 0.8)',   // blue
+    'rgba(255, 206, 86, 0.8)',   // yellow
+    'rgba(75, 192, 192, 0.8)',   // aqua
+    'rgba(153, 102, 255, 0.8)',  // purple
+    'rgba(255, 159, 64, 0.8)',   // orange
+    'rgba(0, 255, 140, 0.8)'     // green
+  ];
+  return colors[Math.floor(Math.random() * colors.length)];
+}
 
-    btn.addEventListener("click", () => {
-      btn.classList.add("active-glow");
-      setTimeout(() => btn.classList.remove("active-glow"), 1600); // Match animation duration
-    });
+// ✨ Modified logic for button glow
+const allButtons = document.querySelectorAll("button");
+allButtons.forEach(btn => {
+  if (btn.closest("#audioPlayer")) return;
+
+  btn.addEventListener("click", () => {
+    const newColor = getRandomGlowColor();
+    btn.style.setProperty('--glow-color', newColor);
+
+    btn.classList.remove("active-glow"); // restart animation
+    void btn.offsetWidth; // force reflow
+    btn.classList.add("active-glow");
+
+    // Optional: remove after animation ends
+    setTimeout(() => {
+      btn.classList.remove("active-glow");
+    }, 1600);
   });
 });
