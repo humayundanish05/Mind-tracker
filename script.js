@@ -134,6 +134,7 @@ function updateCountdown() {
 }
 
 // 🎵 Volume Control + Other Initializers
+
 window.addEventListener("DOMContentLoaded", () => {
   const audio = document.getElementById("audioPlayer");
   const slider = document.getElementById("volumeSlider");
@@ -145,13 +146,13 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 🔘 Dark/Light Mode Toggle
+  // 🌙 Light Mode Toggle
   const toggle = document.getElementById("modeToggle");
   toggle.addEventListener("change", () => {
     document.body.classList.toggle("light-mode", toggle.checked);
   });
 
-  // 🟦 Scroll Progress Bar
+  // 📈 Scroll Progress Bar
   window.addEventListener("scroll", () => {
     const scrollBar = document.getElementById("scrollBar");
     const totalHeight = document.body.scrollHeight - window.innerHeight;
@@ -159,7 +160,7 @@ window.addEventListener("DOMContentLoaded", () => {
     scrollBar.style.width = `${progress}%`;
   });
 
-  // 🔮 Section Animation on Scroll
+  // 🧙‍♂️ Animate Sections on Scroll
   const sections = document.querySelectorAll(".section");
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -171,4 +172,15 @@ window.addEventListener("DOMContentLoaded", () => {
   }, { threshold: 0.2 });
 
   sections.forEach(section => observer.observe(section));
+
+  // 🎯 Add glow effect to buttons on click only (except audio player)
+  const allButtons = document.querySelectorAll("button");
+  allButtons.forEach(btn => {
+    if (btn.closest("#audioPlayer")) return; // Skip if inside audio
+
+    btn.addEventListener("click", () => {
+      btn.classList.add("active-glow");
+      setTimeout(() => btn.classList.remove("active-glow"), 1600); // Match animation duration
+    });
+  });
 });
