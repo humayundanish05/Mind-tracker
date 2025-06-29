@@ -1,4 +1,4 @@
-/* Import Urdu handwriting font */
+/* ✅ Import Urdu handwriting font */
 body {
   font-family: 'Noto Nastaliq Urdu', serif;
   background: radial-gradient(circle at top left, #1a1a2e, #16213e);
@@ -10,7 +10,7 @@ body {
   transition: background 0.4s, color 0.4s;
 }
 
-/* Light mode */
+/* ✅ Light Mode */
 body.light-mode {
   background: #f2f2f2;
   color: #222;
@@ -28,12 +28,14 @@ body.light-mode button:hover {
   background: #005f63;
 }
 
+/* ✅ Container */
 .container {
   max-width: 800px;
   margin: auto;
   padding: 20px;
 }
 
+/* ✅ Section with fade animation */
 .section {
   background: rgba(255, 255, 255, 0.05);
   padding: 20px;
@@ -44,7 +46,6 @@ body.light-mode button:hover {
   transform: translateY(20px);
   animation: fadeInUp 0.6s forwards;
 }
-
 @keyframes fadeInUp {
   to {
     opacity: 1;
@@ -52,6 +53,7 @@ body.light-mode button:hover {
   }
 }
 
+/* ✅ Textarea Urdu-style */
 textarea {
   width: 100%;
   padding: 10px;
@@ -62,57 +64,66 @@ textarea {
   direction: rtl;
 }
 
+/* ✅ Buttons with diamond glow */
 button {
   padding: 10px 20px;
   margin-top: 10px;
-  background: #00adb5;
+  background: #ff8800;
   border: none;
   border-radius: 8px;
   color: white;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.3s;
 }
-
 button:hover {
-  background: #007b83;
+  animation: diamondPulse 1.6s infinite;
+  background: #ffa726;
+  color: white;
 }
 
+/* ✅ Diamond Pulse Glow */
+@keyframes diamondPulse {
+  0% {
+    box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 25px 10px rgba(255, 165, 0, 0.9);
+    transform: scale(1.05);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+    transform: scale(1);
+  }
+}
+
+/* ✅ Mood Emoji Buttons */
 .mood-options button {
   font-size: 24px;
   margin: 5px;
   padding: 10px;
 }
 
-/* 🎵 Music Player Styling with Orange Pulse */
-@keyframes pulseGlow {
-  0% {
-    box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 25px 8px rgba(255, 165, 0, 0.9);
-  }
-  100% {
-    box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
-  }
-}
-
+/* ✅ Music Player Styling */
 #audioPlayer {
   width: 100%;
   max-width: 100%;
   height: 40px;
   border-radius: 10px;
   background-color: #1f4068;
+  box-shadow: 0 0 15px 4px rgba(255, 165, 0, 0.6);
   outline: none;
   margin-top: 15px;
-  animation: pulseGlow 1.5s infinite;
+  animation: diamondPulse 1.6s infinite;
 }
 
+/* ✅ Countdown Timer */
 #countdown {
   font-size: 2em;
   margin: 10px 0;
 }
 
-/* 🎚 Volume Control */
+/* ✅ Volume Control */
 .volume-control {
   margin-top: 15px;
 }
@@ -125,7 +136,7 @@ button:hover {
   font-size: 14px;
 }
 
-/* 🦶 Footer */
+/* ✅ Footer */
 .footer {
   text-align: center;
   padding: 20px;
@@ -138,7 +149,7 @@ button:hover {
   color: #ffffff;
 }
 
-/* 🌓 Light/Dark Toggle Switch */
+/* ✅ Light/Dark Mode Toggle Switch */
 .toggle-container {
   position: fixed;
   top: 10px;
@@ -147,12 +158,10 @@ button:hover {
   display: flex;
   align-items: center;
 }
-
 .toggle-label {
   font-size: 14px;
   margin-right: 8px;
 }
-
 .switch {
   position: relative;
   display: inline-block;
@@ -193,13 +202,13 @@ input:checked + .slider:before {
   transform: translateX(-22px);
 }
 
-/* 📈 Scroll Progress Bar */
+/* ✅ Scroll Progress Bar */
 #scrollBar {
   position: fixed;
   top: 0;
   left: 0;
   height: 5px;
-  background: #00adb5;
+  background: #ffa726;
   z-index: 9999;
   width: 0%;
   transition: width 0.25s ease-out;
