@@ -35,7 +35,93 @@ function newPrompt() {
 
 function sendSecret() {
   const userSecret = document.getElementById('userSecret').value.trim();
-  const random = secrets[Math.floor(Math.random() * secrets.length)];
+let timerInterval;
+let timeLeft = 0;
+let breathingStarted = false;
+let breathingPaused = false;
+let breathingTimeout = null;
+
+const box = document.getElementById("breath-box");
+const affirmations = {
+  inhale: ["آپ محفوظ ہیں۔", "آپ کافی ہیں جیسے ہیں۔", "روشنی آپ کے اندر ہے۔"],
+  hold: ["یہ لمحہ آپ کا ہے۔", "ابھی بس محسوس کریں۔", "خاموشی میں سکون ہے۔"],
+  exhale: ["جانے دیں...", "سکون ہے آپ میں۔", "پریشانیاں ہوا کی طرح اڑ رہی ہیں۔"]
+};
+
+function startBreathingCycle() {
+  if (!box || breathingPaused) return;
+
+  const inhaleText = affirmations.inhale[Math.floor(Math.random() * affirmations.inhale.length)];
+  box.textContent = inhaleText;
+  box.className = 'phase-inhale';
+
+  breathingTimeout = setTimeout(() => {
+    if (breathingPaused) return;
+    const holdText = affirmations.hold[Math.floor(Math.random() * affirmations.hold.length)];
+    box.textContent = holdText;
+    box.className = 'phase-hold';
+
+    breathingTimeout = setTimeout(() => {
+      if (breathingPaused) return;
+      const exhaleText = affirmations.exhale[Math.floor(Math.random() * affirmations.exhale.length)];
+      box.textContent = exhaleText;
+      box.className = 'phase-exhale';
+
+      breathingTimeout = setTimeout(startBreathingCycle, 6000);
+    }, 4000);
+  }, 4000);
+}
+
+function startTimer() {
+  const input = parseInt(document.getElementById('timeInput').value);
+  if (isNaN(input) || input <= 0) return;
+
+  clearInterval(timerInterval);
+  timeLeft = input * 60;
+  updateCountdown();
+
+  // Resume if previously paused
+  breathingPaused = false;
+  if (!breathingStarted) {
+    breathingStarted = true;
+    startBreathingCycle();
+  }
+
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    updateCountdown();
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      breathingStarted = false;
+      breathingPaused = true;
+      clearTimeout(breathingTimeout);
+      alert("⏳ وقت مکمل ہوا! سکون سے سانس لیں۔");
+    }
+  }, 1000);
+}
+
+function pauseTimer() {
+  clearInterval(timerInterval);
+  breathingPaused = true;
+  clearTimeout(breathingTimeout);
+}
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  timeLeft = 0;
+  updateCountdown();
+  breathingStarted = false;
+  breathingPaused = true;
+  clearTimeout(breathingTimeout);
+  box.textContent = "آئیے، شروع کرتے ہیں...";
+  box.className = '';
+}
+
+function updateCountdown() {
+  const minutes = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+  const seconds = (timeLeft % 60).toString().padStart(2, '0');
+  document.getElementById('countdown').textContent = `${minutes}:${seconds}`;
+}  const random = secrets[Math.floor(Math.random() * secrets.length)];
   document.getElementById('randomSecret').textContent = userSecret ? `راز کی دنیا سے: “${random}”` : '';
 }
 
@@ -50,80 +136,6 @@ function saveJournal() {
   document.getElementById('saveStatus').textContent = 'جرنل مقامی طور پر محفوظ ہوگیا ہے۔';
 }
 
-// 🧘 Timer + Breathing Cycle
-let timerInterval;
-let timeLeft = 0;
-let breathingStarted = false;
-
-const breathingAffirmations = {
-  inhale: ["آپ محفوظ ہیں۔", "آپ کافی ہیں جیسے ہیں۔", "روشنی آپ کے اندر ہے۔"],
-  hold: ["یہ لمحہ آپ کا ہے۔", "ابھی بس محسوس کریں۔", "خاموشی میں سکون ہے۔"],
-  exhale: ["جانے دیں...", "سکون ہے آپ میں۔", "پریشانیاں ہوا کی طرح اڑ رہی ہیں۔"]
-};
-
-function startBreathingCycle() {
-  const box = document.getElementById("breath-box");
-  if (!box) return;
-
-  const inhaleText = breathingAffirmations.inhale[Math.floor(Math.random() * breathingAffirmations.inhale.length)];
-  box.textContent = inhaleText;
-  box.className = 'phase-inhale';
-
-  setTimeout(() => {
-    const holdText = breathingAffirmations.hold[Math.floor(Math.random() * breathingAffirmations.hold.length)];
-    box.textContent = holdText;
-    box.className = 'phase-hold';
-
-    setTimeout(() => {
-      const exhaleText = breathingAffirmations.exhale[Math.floor(Math.random() * breathingAffirmations.exhale.length)];
-      box.textContent = exhaleText;
-      box.className = 'phase-exhale';
-
-      setTimeout(startBreathingCycle, 6000);
-    }, 4000);
-  }, 4000);
-}
-
-function startTimer() {
-  const input = parseInt(document.getElementById('timeInput').value);
-  if (isNaN(input) || input <= 0) return;
-
-  clearInterval(timerInterval);
-  timeLeft = input * 60;
-  updateCountdown();
-
-  if (!breathingStarted) {
-    breathingStarted = true;
-    startBreathingCycle();
-  }
-
-  timerInterval = setInterval(() => {
-    timeLeft--;
-    updateCountdown();
-    if (timeLeft <= 0) {
-      clearInterval(timerInterval);
-      alert("⏳ وقت مکمل ہوا! سکون سے سانس لیں۔");
-      breathingStarted = false;
-    }
-  }, 1000);
-}
-
-function pauseTimer() {
-  clearInterval(timerInterval);
-}
-
-function resetTimer() {
-  clearInterval(timerInterval);
-  timeLeft = 0;
-  updateCountdown();
-  breathingStarted = false;
-}
-
-function updateCountdown() {
-  const minutes = Math.floor(timeLeft / 60).toString().padStart(2, '0');
-  const seconds = (timeLeft % 60).toString().padStart(2, '0');
-  document.getElementById('countdown').textContent = `${minutes}:${seconds}`;
-}
 
 // 🎵 Volume + UI Initializations
 window.addEventListener("DOMContentLoaded", () => {
