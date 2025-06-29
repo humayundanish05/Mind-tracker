@@ -1,12 +1,31 @@
-/* General Styles */
+/* Import Urdu handwriting font */
 body {
   font-family: 'Noto Nastaliq Urdu', serif;
   background: radial-gradient(circle at top left, #1a1a2e, #16213e);
   color: #ffffff;
   margin: 0;
   padding: 0;
-  text-align: right;
+  text-align: center;
   direction: rtl;
+  transition: background 0.4s, color 0.4s;
+}
+
+/* Light mode */
+body.light-mode {
+  background: #f2f2f2;
+  color: #222;
+}
+body.light-mode .section {
+  background: rgba(0, 0, 0, 0.05);
+}
+body.light-mode .footer {
+  color: #444;
+}
+body.light-mode button {
+  background: #007b83;
+}
+body.light-mode button:hover {
+  background: #005f63;
 }
 
 .container {
@@ -15,17 +34,25 @@ body {
   padding: 20px;
 }
 
-/* Section Styling */
 .section {
   background: rgba(255, 255, 255, 0.05);
   padding: 20px;
   margin: 20px 0;
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(255,255,255,0.1);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s forwards;
 }
 
-/* Textarea + Input */
-textarea, input[type="number"] {
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+textarea {
   width: 100%;
   padding: 10px;
   border-radius: 8px;
@@ -33,11 +60,8 @@ textarea, input[type="number"] {
   resize: vertical;
   font-family: inherit;
   direction: rtl;
-  background: #2c2c54;
-  color: white;
 }
 
-/* Buttons */
 button {
   padding: 10px 20px;
   margin-top: 10px;
@@ -47,24 +71,22 @@ button {
   color: white;
   cursor: pointer;
   transition: background 0.3s;
-  font-family: inherit;
 }
 
 button:hover {
   background: #007b83;
 }
 
-/* Mood Emoji Buttons */
 .mood-options button {
   font-size: 24px;
   margin: 5px;
-  padding: 10px 14px;
-  background: #393e46;
+  padding: 10px;
 }
 
-/* Audio Player Styling */
+/* Music Player Styling */
 #audioPlayer {
   width: 100%;
+  max-width: 100%;
   height: 40px;
   border-radius: 10px;
   background-color: #1f4068;
@@ -73,48 +95,23 @@ button:hover {
   margin-top: 15px;
   transition: box-shadow 0.3s ease;
 }
-
 #audioPlayer:hover {
   box-shadow: 0 0 15px rgba(0, 173, 181, 0.5);
 }
 
-/* Countdown Timer */
 #countdown {
   font-size: 2em;
   margin: 10px 0;
-  text-align: center;
-}
-
-/* Music Selector */
-.music select {
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 8px;
-  border: none;
-  background-color: #1f4068;
-  color: white;
-  margin-top: 10px;
-  width: 100%;
-  font-family: inherit;
-}
-
-.music select:focus {
-  outline: none;
-  background-color: #324a78;
 }
 
 /* Volume Control */
 .volume-control {
   margin-top: 15px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
-
 .volume-control input[type="range"] {
   width: 60%;
+  margin-right: 10px;
 }
-
 .volume-control label {
   color: #ccc;
   font-size: 14px;
@@ -129,7 +126,73 @@ button:hover {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   margin-top: 40px;
 }
-
 .footer strong {
   color: #ffffff;
 }
+
+/* Light/Dark Mode Toggle Switch */
+.toggle-container {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+}
+
+.toggle-label {
+  font-size: 14px;
+  margin-right: 8px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 24px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  right: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+input:checked + .slider {
+  background-color: #00adb5;
+}
+input:checked + .slider:before {
+  transform: translateX(-22px);
+}
+
+/* Scroll Progress Bar */
+#scrollBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 5px;
+  background: #00adb5;
+  z-index: 9999;
+  width: 0%;
+  transition: width 0.25s ease-out;
+  }
