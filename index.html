@@ -132,36 +132,38 @@
   <script src="script.js"></script>
 
   <!-- 🌈 Breathing Script -->
-  <script>
-    const affirmations = {
-      inhale: ["آپ محفوظ ہیں۔", "آپ کافی ہیں جیسے ہیں۔", "روشنی آپ کے اندر ہے۔"],
-      hold: ["یہ لمحہ آپ کا ہے۔", "ابھی بس محسوس کریں۔", "خاموشی میں سکون ہے۔"],
-      exhale: ["جانے دیں...", "سکون ہے آپ میں۔", "پریشانیاں ہوا کی طرح اڑ رہی ہیں۔"]
-    };
+<script>
+  const affirmations = {
+    inhale: ["آپ محفوظ ہیں۔", "آپ کافی ہیں جیسے ہیں۔", "روشنی آپ کے اندر ہے۔"],
+    hold: ["یہ لمحہ آپ کا ہے۔", "ابھی بس محسوس کریں۔", "خاموشی میں سکون ہے۔"],
+    exhale: ["جانے دیں...", "سکون ہے آپ میں۔", "پریشانیاں ہوا کی طرح اڑ رہی ہیں۔"]
+  };
 
-    const box = document.getElementById("breath-box");
+  const box = document.getElementById("breath-box");
 
-    function startBreathingCycle() {
-      const inhaleText = affirmations.inhale[Math.floor(Math.random() * affirmations.inhale.length)];
-      box.textContent = inhaleText;
-      box.className = 'phase-inhale';
+  function startBreathingCycle() {
+    if (!box) return;
+
+    const inhaleText = affirmations.inhale[Math.floor(Math.random() * affirmations.inhale.length)];
+    box.textContent = inhaleText;
+    box.className = 'phase-inhale';
+
+    setTimeout(() => {
+      const holdText = affirmations.hold[Math.floor(Math.random() * affirmations.hold.length)];
+      box.textContent = holdText;
+      box.className = 'phase-hold';
 
       setTimeout(() => {
-        const holdText = affirmations.hold[Math.floor(Math.random() * affirmations.hold.length)];
-        box.textContent = holdText;
-        box.className = 'phase-hold';
+        const exhaleText = affirmations.exhale[Math.floor(Math.random() * affirmations.exhale.length)];
+        box.textContent = exhaleText;
+        box.className = 'phase-exhale';
 
-        setTimeout(() => {
-          const exhaleText = affirmations.exhale[Math.floor(Math.random() * affirmations.exhale.length)];
-          box.textContent = exhaleText;
-          box.className = 'phase-exhale';
-
-          setTimeout(startBreathingCycle, 6000);
-        }, 4000);
+        setTimeout(startBreathingCycle, 6000);
       }, 4000);
-    }
+    }, 4000);
+  }
 
-    setTimeout(startBreathingCycle, 1000);
-  </script>
+  window.addEventListener("DOMContentLoaded", startBreathingCycle);
+</script>
 </body>
 </html>
