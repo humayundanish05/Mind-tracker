@@ -1,3 +1,4 @@
+// Urdu Prompts
 const prompts = [
   "آپ اس وقت واقعی کیا محسوس کر رہے ہیں؟",
   "ایسی کون سی چیز ہے جسے آپ مسلسل مؤخر کر رہے ہیں؟",
@@ -103,7 +104,7 @@ function startTimer() {
   const input = parseInt(document.getElementById('timeInput').value);
   if (isNaN(input) || input <= 0) return;
 
-  clearInterval(timerInterval); // ✅ Fixed: stop old timer first
+  clearInterval(timerInterval);
   timeLeft = input * 60;
   updateCountdown();
 
@@ -133,7 +134,7 @@ function updateCountdown() {
   document.getElementById('countdown').textContent = `${minutes}:${seconds}`;
 }
 
-// 🎵 Volume Control + Other Initializers
+// DOM READY
 window.addEventListener("DOMContentLoaded", () => {
   const audio = document.getElementById("audioPlayer");
   const slider = document.getElementById("volumeSlider");
@@ -145,13 +146,11 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 🔘 Dark/Light Mode Toggle
   const toggle = document.getElementById("modeToggle");
   toggle.addEventListener("change", () => {
     document.body.classList.toggle("light-mode", toggle.checked);
   });
 
-  // 🟦 Scroll Progress Bar
   window.addEventListener("scroll", () => {
     const scrollBar = document.getElementById("scrollBar");
     const totalHeight = document.body.scrollHeight - window.innerHeight;
@@ -159,7 +158,6 @@ window.addEventListener("DOMContentLoaded", () => {
     scrollBar.style.width = `${progress}%`;
   });
 
-  // 🔮 Section Animation on Scroll
   const sections = document.querySelectorAll(".section");
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -171,6 +169,13 @@ window.addEventListener("DOMContentLoaded", () => {
   }, { threshold: 0.2 });
 
   sections.forEach(section => observer.observe(section));
+
+  // 🌟 Glow on Click
+  const allButtons = document.querySelectorAll("button");
+  allButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      allButtons.forEach(btn => btn.classList.remove("glow-pulse"));
+      button.classList.add("glow-pulse");
+    });
+  });
 });
-
-
