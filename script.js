@@ -41,11 +41,13 @@ function setMood(emoji) {
   const responses = moodResponses[emoji];
   if (responses && responses.length > 0) {
     const random = responses[Math.floor(Math.random() * responses.length)];
-    document.getElementById('mood-result').textContent = `${emoji} ${random}`;
+    document.getElementById('mood-result').textContent = random; // 👈 Only sentence with its own emoji
   } else {
-    document.getElementById('mood-result').textContent = `${emoji} آپ کا موڈ معلوم نہیں ہو سکا۔`;
+    document.getElementById('mood-result').textContent = "آپ کا موڈ معلوم نہیں ہو سکا۔ 😶";
   }
-}// 💬 Urdu Prompts
+}
+
+// 💬 Urdu Prompts
 const prompts = [
   "آپ اس وقت واقعی کیا محسوس کر رہے ہیں؟",
   "ایسی کون سی چیز ہے جسے آپ مسلسل مؤخر کر رہے ہیں؟",
