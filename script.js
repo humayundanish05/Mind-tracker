@@ -30,11 +30,9 @@ function setMood(emoji) {
 
 function newPrompt() {
   const random = prompts[Math.floor(Math.random() * prompts.length)];
-  document.getElementById('prompt').textContent = random;
-}
+  document.getElementById('pr
 
-function sendSecret() {
-  const userSecret = document.getElementById('userSecret').value.trim();
+  
 let timerInterval;
 let timeLeft = 0;
 let breathingStarted = false;
@@ -42,6 +40,7 @@ let breathingPaused = false;
 let breathingTimeout = null;
 
 const box = document.getElementById("breath-box");
+
 const affirmations = {
   inhale: ["آپ محفوظ ہیں۔", "آپ کافی ہیں جیسے ہیں۔", "روشنی آپ کے اندر ہے۔"],
   hold: ["یہ لمحہ آپ کا ہے۔", "ابھی بس محسوس کریں۔", "خاموشی میں سکون ہے۔"],
@@ -51,19 +50,19 @@ const affirmations = {
 function startBreathingCycle() {
   if (!box || breathingPaused) return;
 
-  const inhaleText = affirmations.inhale[Math.floor(Math.random() * affirmations.inhale.length)];
+  const inhaleText = getRandom(affirmations.inhale);
   box.textContent = inhaleText;
   box.className = 'phase-inhale';
 
   breathingTimeout = setTimeout(() => {
     if (breathingPaused) return;
-    const holdText = affirmations.hold[Math.floor(Math.random() * affirmations.hold.length)];
+    const holdText = getRandom(affirmations.hold);
     box.textContent = holdText;
     box.className = 'phase-hold';
 
     breathingTimeout = setTimeout(() => {
       if (breathingPaused) return;
-      const exhaleText = affirmations.exhale[Math.floor(Math.random() * affirmations.exhale.length)];
+      const exhaleText = getRandom(affirmations.exhale);
       box.textContent = exhaleText;
       box.className = 'phase-exhale';
 
@@ -72,29 +71,34 @@ function startBreathingCycle() {
   }, 4000);
 }
 
+function getRandom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
 function startTimer() {
   const input = parseInt(document.getElementById('timeInput').value);
   if (isNaN(input) || input <= 0) return;
 
   clearInterval(timerInterval);
+  clearTimeout(breathingTimeout);
   timeLeft = input * 60;
   updateCountdown();
 
-  // Resume if previously paused
+  // 🔄 Reset breathing state
   breathingPaused = false;
-  if (!breathingStarted) {
-    breathingStarted = true;
-    startBreathingCycle();
-  }
+
+  // 🌬️ Always restart breathing on start
+  startBreathingCycle();
+  breathingStarted = true;
 
   timerInterval = setInterval(() => {
     timeLeft--;
     updateCountdown();
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
+      clearTimeout(breathingTimeout);
       breathingStarted = false;
       breathingPaused = true;
-      clearTimeout(breathingTimeout);
       alert("⏳ وقت مکمل ہوا! سکون سے سانس لیں۔");
     }
   }, 1000);
@@ -102,17 +106,17 @@ function startTimer() {
 
 function pauseTimer() {
   clearInterval(timerInterval);
-  breathingPaused = true;
   clearTimeout(breathingTimeout);
+  breathingPaused = true;
 }
 
 function resetTimer() {
   clearInterval(timerInterval);
-  timeLeft = 0;
-  updateCountdown();
-  breathingStarted = false;
-  breathingPaused = true;
   clearTimeout(breathingTimeout);
+  timeLeft = 0;
+  breathingPaused = true;
+  breathingStarted = false;
+  updateCountdown();
   box.textContent = "آئیے، شروع کرتے ہیں...";
   box.className = '';
 }
@@ -121,21 +125,14 @@ function updateCountdown() {
   const minutes = Math.floor(timeLeft / 60).toString().padStart(2, '0');
   const seconds = (timeLeft % 60).toString().padStart(2, '0');
   document.getElementById('countdown').textContent = `${minutes}:${seconds}`;
-}  const random = secrets[Math.floor(Math.random() * secrets.length)];
-  document.getElementById('randomSecret').textContent = userSecret ? `راز کی دنیا سے: “${random}”` : '';
+}ompt').textContent = random;
 }
 
-function showAffirmation() {
-  const random = affirmationList[Math.floor(Math.random() * affirmationList.length)];
-  document.getElementById('affirmation').textContent = random;
-}
+function sendSecret() {
+  const userSecret = document.getElementById('userSecret').value.trim();
 
-function saveJournal() {
-  const content = document.getElementById('journalBox').value;
-  localStorage.setItem('innerverseJournal', content);
-  document.getElementById('saveStatus').textContent = 'جرنل مقامی طور پر محفوظ ہوگیا ہے۔';
-}
-
+  
+ 
 
 // 🎵 Volume + UI Initializations
 window.addEventListener("DOMContentLoaded", () => {
