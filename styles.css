@@ -80,23 +80,27 @@ button:not(.emoji-btn):hover {
   box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
 }
 
-/* 🎭 Mood Emoji Buttons — Simple style without rainbow */
 .emoji-btn {
   background: rgba(255, 255, 255, 0.08);
   color: white;
-  font-size: 22px;
+  font-size: 22px; /* 🔽 thora chhota size */
   border: none;
   border-radius: 10px;
-  padding: 12px 16px;
-  margin: 5px;
+  padding: 8px 12px; /* 🔽 tighter padding */
+  margin: 4px;
   cursor: pointer;
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 50px;
+  height: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .emoji-btn:hover {
-  transform: scale(1.15);
-  box-shadow: 0 0 18px rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.2);
 }
 
 /* 🌈 Rainbow Animation */
