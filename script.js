@@ -1,4 +1,5 @@
 const moodResponses = {
+const moodResponses = {
   "😊": [
     "خوشی آپ کے اندر سے آتی ہے۔ 😊", "زندگی کے یہ لمحے قیمتی ہیں۔ 🌸", "آپ کی مسکراہٹ روشنی ہے۔ ✨",
     "خوش رہنا ایک نعمت ہے۔ 🙏", "آپ کا دل روشنی سے بھرا ہے۔ 💖", "یہ دن خوبصورت ہے، جیسے آپ۔ 🌞",
@@ -37,13 +38,14 @@ const moodResponses = {
   ]
 };
 
+// ✅ Mood Function
 function setMood(emoji) {
   const responses = moodResponses[emoji];
   if (responses && responses.length > 0) {
     const random = responses[Math.floor(Math.random() * responses.length)];
-    document.getElementById('mood-result').textContent = random; // 👈 Only sentence with its own emoji
+    document.getElementById('mood-result').textContent = random;
   } else {
-    document.getElementById('mood-result').textContent = "آپ کا موڈ معلوم نہیں ہو سکا۔ 😶";
+    document.getElementById('mood-result').textContent = `${emoji} آپ کا موڈ معلوم نہیں ہو سکا۔`;
   }
 }
 
