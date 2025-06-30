@@ -6,7 +6,6 @@
   <title>existence 🌌</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="styles.css" />
-  
 </head>
 <body>
 
@@ -26,16 +25,16 @@
     <h1>welcome to existence 🌌</h1>
 
     <!-- Mood Tracker -->
-<section class="section mood">
-  <h2>🎭 آج آپ کیسا محسوس کر رہے ہیں؟</h2>
-  <div class="mood-options">
-    <button onclick="setMood('😊')">😊</button>
-    <button onclick="setMood('😡')">😡</button>
-    <button onclick="setMood('😂')">😂</button>
-    <button onclick="setMood('🥲')">🥲</button>
-  </div>
-  <p id="mood-result"></p> <!-- ✅ Ye hona zaroori hai -->
-</section>
+    <section class="section mood">
+      <h2>🎭 آج آپ کیسا محسوس کر رہے ہیں؟</h2>
+      <div class="mood-options">
+        <button onclick="setMood('😊')">😊</button>
+        <button onclick="setMood('😡')">😡</button>
+        <button onclick="setMood('😂')">😂</button>
+        <button onclick="setMood('🥲')">🥲</button>
+      </div>
+      <p id="mood-result"></p>
+    </section>
 
     <!-- Reflection Prompt -->
     <section class="section reflection">
@@ -44,15 +43,12 @@
       <button onclick="newPrompt()">سوال دکھائیں</button>
     </section>
 
-  
-
     <!-- Affirmation Drawer -->
     <section class="section affirm">
       <h2>💖 امید کی بات سنیں</h2>
       <button onclick="showAffirmation()">حوصلہ افزائی دیکھیں</button>
       <p id="affirmation"></p>
     </section>
-
 
     <!-- Meditation Timer -->
     <section class="section timer">
@@ -64,35 +60,32 @@
       <button onclick="pauseTimer()">روکیں</button>
       <button onclick="resetTimer()">ری سیٹ</button>
     </section>
+
     <!-- 🌬️ Breathing Meditation Section -->
     <section class="section breathing">
-      <div id="breath-box"> ٹائمر کا "شروع" بٹن دبائی..</div>
+      <div id="breath-box" class="fade-text">ٹائمر کا "شروع" بٹن دبائیں</div>
     </section>
   </div>
 
-    <!-- 🎶 Music Player -->
-    <section class="section music">
-      <h2>🎶 روح کی پرواز</h2>
-      <audio id="audioPlayer" controls>
-        <source src="music5.mp3" type="audio/mp3">
-      </audio>
-      <div class="volume-control">
-        <label for="volumeSlider">🔊 آواز:</label>
-        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
-      </div>
-    </section>
+  <!-- 🎶 Music Player -->
+  <section class="section music">
+    <h2>🎶 روح کی پرواز</h2>
+    <audio id="audioPlayer" controls>
+      <source src="music5.mp3" type="audio/mp3">
+    </audio>
+    <div class="volume-control">
+      <label for="volumeSlider">🔊 آواز:</label>
+      <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
+    </div>
+  </section>
 
-    
-
-
-
-  <!-- Existing Scripts -->
+  <!-- JS Script -->
   <script src="script.js"></script>
 
-
+  <!-- Footer -->
   <footer class="footer">
     <p>🌌 تخلیق کردہ: <strong>Humayun Danish</strong></p>
   </footer>
-  
+
 </body>
 </html>
