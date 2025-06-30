@@ -16,7 +16,6 @@ const affirmationList = [
   "کبھی کبھی کھو جانا بھی ٹھیک ہے۔"
 ];
 
-// 🌀 Mood + Prompt + Affirmation
 const moodMessages = {
   "😊": "آپ خوش محسوس کر رہے ہیں۔",
   "😡": "آپ غصے میں ہیں۔",
@@ -26,10 +25,7 @@ const moodMessages = {
 
 function setMood(emoji) {
   const message = moodMessages[emoji] || "آپ کا موڈ معلوم نہیں ہو سکا۔";
-  const moodDisplay = document.getElementById('mood-result');
-  if (moodDisplay) {
-    moodDisplay.textContent = `${emoji} ${message}`;
-  }
+  document.getElementById('mood-result').textContent = `${emoji} ${message}`;
 }
 
 function newPrompt() {
@@ -42,13 +38,7 @@ function showAffirmation() {
   document.getElementById('affirmation').textContent = random;
 }
 
-// 🧘 Timer + Breathing Logic
-let timerInterval;
-let timeLeft = 0;
-let breathingStarted = false;
-let breathingPaused = false;
-let breathingTimeout = null;
-
+// 🧘 Breathing Timer Logic
 const box = document.getElementById("breath-box");
 
 const affirmations = {
@@ -57,28 +47,40 @@ const affirmations = {
   exhale: ["جانے دیں...", "سکون ہے آپ میں۔", "پریشانیاں ہوا کی طرح اڑ رہی ہیں۔"]
 };
 
+let timerInterval;
+let timeLeft = 0;
+let breathingStarted = false;
+let breathingPaused = false;
+let breathingTimeout = null;
+
 function getRandom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function fadeText(text, phaseClass) {
+  box.classList.remove("fade");
+  void box.offsetWidth;
+  box.textContent = text;
+  box.className = `fade ${phaseClass}`;
 }
 
 function startBreathingCycle() {
   if (!box || breathingPaused) return;
 
   const inhaleText = getRandom(affirmations.inhale);
-  box.textContent = inhaleText;
-  box.className = 'phase-inhale';
+  fadeText(inhaleText, 'phase-inhale');
 
   breathingTimeout = setTimeout(() => {
     if (breathingPaused) return;
+
     const holdText = getRandom(affirmations.hold);
-    box.textContent = holdText;
-    box.className = 'phase-hold';
+    fadeText(holdText, 'phase-hold');
 
     breathingTimeout = setTimeout(() => {
       if (breathingPaused) return;
+
       const exhaleText = getRandom(affirmations.exhale);
-      box.textContent = exhaleText;
-      box.className = 'phase-exhale';
+      fadeText(exhaleText, 'phase-exhale');
 
       breathingTimeout = setTimeout(startBreathingCycle, 6000);
     }, 4000);
@@ -134,7 +136,7 @@ function updateCountdown() {
   document.getElementById('countdown').textContent = `${minutes}:${seconds}`;
 }
 
-// 🎵 Audio + UI Setup
+// 🌐 UI Events Setup
 window.addEventListener("DOMContentLoaded", () => {
   const audio = document.getElementById("audioPlayer");
   const slider = document.getElementById("volumeSlider");
@@ -146,13 +148,11 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 🌙 Mode Toggle
   const toggle = document.getElementById("modeToggle");
   toggle.addEventListener("change", () => {
     document.body.classList.toggle("light-mode", toggle.checked);
   });
 
-  // 📈 Scroll Progress
   window.addEventListener("scroll", () => {
     const scrollBar = document.getElementById("scrollBar");
     const totalHeight = document.body.scrollHeight - window.innerHeight;
@@ -160,7 +160,6 @@ window.addEventListener("DOMContentLoaded", () => {
     scrollBar.style.width = `${progress}%`;
   });
 
-  // ✨ Animate Sections on Scroll
   const sections = document.querySelectorAll(".section");
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -172,7 +171,6 @@ window.addEventListener("DOMContentLoaded", () => {
   }, { threshold: 0.2 });
   sections.forEach(section => observer.observe(section));
 
-  // 🌈 Random Glow on Click
   const allButtons = document.querySelectorAll("button");
   allButtons.forEach(btn => {
     if (btn.closest("#audioPlayer")) return;
