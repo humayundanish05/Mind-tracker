@@ -53,16 +53,6 @@ body.light-mode button:hover {
   }
 }
 
-/* Textarea */
-textarea {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  resize: vertical;
-  font-family: inherit;
-  direction: rtl;
-}
 
 /* Buttons */
 button {
