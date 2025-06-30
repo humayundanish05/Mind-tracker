@@ -26,7 +26,10 @@ const moodMessages = {
 
 function setMood(emoji) {
   const message = moodMessages[emoji] || "آپ کا موڈ معلوم نہیں ہو سکا۔";
-  document.getElementById('mood-result').textContent = `${emoji} ${message}`;
+  const moodDisplay = document.getElementById('mood-result');
+  if (moodDisplay) {
+    moodDisplay.textContent = `${emoji} ${message}`;
+  }
 }
 
 function newPrompt() {
@@ -39,7 +42,7 @@ function showAffirmation() {
   document.getElementById('affirmation').textContent = random;
 }
 
-// 🧘‍♂️ Timer + Breathing Logic
+// 🧘 Timer + Breathing Logic
 let timerInterval;
 let timeLeft = 0;
 let breathingStarted = false;
@@ -149,7 +152,7 @@ window.addEventListener("DOMContentLoaded", () => {
     document.body.classList.toggle("light-mode", toggle.checked);
   });
 
-  // 📈 Scroll Bar
+  // 📈 Scroll Progress
   window.addEventListener("scroll", () => {
     const scrollBar = document.getElementById("scrollBar");
     const totalHeight = document.body.scrollHeight - window.innerHeight;
@@ -157,7 +160,7 @@ window.addEventListener("DOMContentLoaded", () => {
     scrollBar.style.width = `${progress}%`;
   });
 
-  // ✨ Scroll Reveal Animation
+  // ✨ Animate Sections on Scroll
   const sections = document.querySelectorAll(".section");
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -169,17 +172,7 @@ window.addEventListener("DOMContentLoaded", () => {
   }, { threshold: 0.2 });
   sections.forEach(section => observer.observe(section));
 
-  // 🌈 Random Glow
-  function getRandomGlowColor() {
-    const colors = [
-      'rgba(255, 99, 132, 0.8)', 'rgba(54, 162, 235, 0.8)',
-      'rgba(255, 206, 86, 0.8)', 'rgba(75, 192, 192, 0.8)',
-      'rgba(153, 102, 255, 0.8)', 'rgba(255, 159, 64, 0.8)',
-      'rgba(0, 255, 140, 0.8)'
-    ];
-    return colors[Math.floor(Math.random() * colors.length)];
-  }
-
+  // 🌈 Random Glow on Click
   const allButtons = document.querySelectorAll("button");
   allButtons.forEach(btn => {
     if (btn.closest("#audioPlayer")) return;
@@ -188,7 +181,6 @@ window.addEventListener("DOMContentLoaded", () => {
       const color = getRandomGlowColor();
       btn.classList.remove("active-glow");
       void btn.offsetWidth;
-
       btn.style.boxShadow = `0 0 25px 10px ${color}`;
       btn.classList.add("active-glow");
 
@@ -198,4 +190,14 @@ window.addEventListener("DOMContentLoaded", () => {
       }, 1600);
     });
   });
+
+  function getRandomGlowColor() {
+    const colors = [
+      'rgba(255, 99, 132, 0.8)', 'rgba(54, 162, 235, 0.8)',
+      'rgba(255, 206, 86, 0.8)', 'rgba(75, 192, 192, 0.8)',
+      'rgba(153, 102, 255, 0.8)', 'rgba(255, 159, 64, 0.8)',
+      'rgba(0, 255, 140, 0.8)'
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
 });
