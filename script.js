@@ -49,7 +49,6 @@ const affirmations = {
 
 let timerInterval;
 let timeLeft = 0;
-let breathingStarted = false;
 let breathingPaused = false;
 let breathingTimeout = null;
 
@@ -58,33 +57,35 @@ function getRandom(arr) {
 }
 
 function fadeText(text, phaseClass) {
+  box.classList.remove("phase-inhale", "phase-hold", "phase-exhale");
   box.classList.remove("fade");
-  void box.offsetWidth;
+  void box.offsetWidth; // force reflow
+  box.classList.add("fade");
   box.textContent = text;
-  box.className = `fade ${phaseClass}`;
+
+  setTimeout(() => {
+    box.classList.add(phaseClass);
+  }, 50);
 }
 
 function startBreathingCycle() {
   if (!box || breathingPaused) return;
 
-  const inhaleText = getRandom(affirmations.inhale);
-  fadeText(inhaleText, 'phase-inhale');
+  fadeText(getRandom(affirmations.inhale), 'phase-inhale');
 
   breathingTimeout = setTimeout(() => {
     if (breathingPaused) return;
 
-    const holdText = getRandom(affirmations.hold);
-    fadeText(holdText, 'phase-hold');
+    fadeText(getRandom(affirmations.hold), 'phase-hold');
 
     breathingTimeout = setTimeout(() => {
       if (breathingPaused) return;
 
-      const exhaleText = getRandom(affirmations.exhale);
-      fadeText(exhaleText, 'phase-exhale');
+      fadeText(getRandom(affirmations.exhale), 'phase-exhale');
 
-      breathingTimeout = setTimeout(startBreathingCycle, 6000);
-    }, 4000);
-  }, 4000);
+      breathingTimeout = setTimeout(startBreathingCycle, 2000);
+    }, 2000);
+  }, 2000);
 }
 
 function startTimer() {
@@ -94,11 +95,9 @@ function startTimer() {
   clearInterval(timerInterval);
   clearTimeout(breathingTimeout);
   timeLeft = input * 60;
-  updateCountdown();
-
   breathingPaused = false;
+  updateCountdown();
   startBreathingCycle();
-  breathingStarted = true;
 
   timerInterval = setInterval(() => {
     timeLeft--;
@@ -107,7 +106,6 @@ function startTimer() {
       clearInterval(timerInterval);
       clearTimeout(breathingTimeout);
       breathingPaused = true;
-      breathingStarted = false;
       alert("⏳ وقت مکمل ہوا! سکون سے سانس لیں۔");
     }
   }, 1000);
@@ -124,7 +122,6 @@ function resetTimer() {
   clearTimeout(breathingTimeout);
   timeLeft = 0;
   breathingPaused = true;
-  breathingStarted = false;
   updateCountdown();
   box.textContent = "ٹائمر شروع کریں";
   box.className = '';
