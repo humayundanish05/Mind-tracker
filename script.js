@@ -17,8 +17,16 @@ const affirmationList = [
 ];
 
 // 🌀 Mood + Prompt + Affirmation
+const moodMessages = {
+  "😊": "آپ خوش محسوس کر رہے ہیں۔",
+  "😡": "آپ غصے میں ہیں۔",
+  "😂": "آپ کو بہت ہنسی آ رہی ہے۔",
+  "🥲": "آپ اداسی کے ساتھ مسکرا رہے ہیں۔"
+};
+
 function setMood(emoji) {
-  document.getElementById('mood-result').textContent = `آپ کا موڈ: ${emoji}`;
+  const message = moodMessages[emoji] || "آپ کا موڈ معلوم نہیں ہو سکا۔";
+  document.getElementById('mood-result').textContent = `${emoji} ${message}`;
 }
 
 function newPrompt() {
