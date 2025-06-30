@@ -1,7 +1,15 @@
-/* Urdu Font & Base Theme */
+/* Rainbow Blurred Animated Background */
+@keyframes rainbowShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 body {
   font-family: 'Noto Nastaliq Urdu', serif;
-  background: radial-gradient(circle at top left, #1a1a2e, #16213e);
+  background: linear-gradient(270deg, #ff6ec4, #7873f5, #4fd1c5, #ffe29f, #ff6ec4);
+  background-size: 1000% 1000%;
+  animation: rainbowShift 20s ease infinite;
   color: #ffffff;
   margin: 0;
   padding: 0;
@@ -12,9 +20,12 @@ body {
 
 /* Light Mode Styling */
 body.light-mode {
-  background: #f2f2f2;
+  background: #f2f2f2 !important;
+  background-size: unset;
+  background-image: none;
   color: #222;
 }
+
 body.light-mode .section {
   background: rgba(0, 0, 0, 0.05);
 }
@@ -26,6 +37,22 @@ body.light-mode button {
 }
 body.light-mode button:hover {
   background: #007b83;
+}
+body.light-mode #breath-box {
+  background-color: #ffffff;
+  color: #222;
+}
+body.light-mode .phase-inhale {
+  background-color: rgba(0, 255, 150, 0.2);
+  color: #007d5e;
+}
+body.light-mode .phase-hold {
+  background-color: rgba(255, 255, 0, 0.2);
+  color: #888100;
+}
+body.light-mode .phase-exhale {
+  background-color: rgba(255, 100, 100, 0.2);
+  color: #b30000;
 }
 
 /* Container */
@@ -111,7 +138,6 @@ button.active-glow {
 }
 
 /* Breathing Box */
-
 #breath-box {
   margin: 30px auto;
   padding: 20px 40px;
@@ -148,21 +174,6 @@ button.active-glow {
   background-color: rgba(255, 100, 100, 0.15);
   color: #ffc9c9;
   box-shadow: 0 0 20px 6px rgba(255, 100, 100, 0.6);
-}reath-box {
-  background-color: #ffffff;
-  color: #222;
-}
-body.light-mode .phase-inhale {
-  background-color: rgba(0, 255, 150, 0.2);
-  color: #007d5e;
-}
-body.light-mode .phase-hold {
-  background-color: rgba(255, 255, 0, 0.2);
-  color: #888100;
-}
-body.light-mode .phase-exhale {
-  background-color: rgba(255, 100, 100, 0.2);
-  color: #b30000;
 }
 
 /* Volume Control */
