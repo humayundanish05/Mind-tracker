@@ -123,6 +123,20 @@ button:not(.emoji-btn):hover {
   100% { background-position: 0% 50%; }
 }
 
+/* 🧘 Timer Button Group - Single Line Layout */
+.timer-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: nowrap; /* ensure all stay on same line */
+  margin-top: 10px;
+}
+
+.timer-buttons button {
+  flex-shrink: 0;
+  min-width: 90px;
+}
+
 /* 🔄 Fade Transition for Breathing */
 #breath-box.fade {
   opacity: 0;
