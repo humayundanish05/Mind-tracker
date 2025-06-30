@@ -9,13 +9,6 @@ const prompts = [
   "کون سی یاد آپ کو سکون دیتی ہے؟"
 ];
 
-const secrets = [
-  "میں اکثر اکیلا روتا ہوں۔",
-  "ابھی بھی ماضی کی ایک یاد دل میں ہے۔",
-  "میں مضبوط دکھائی دیتا ہوں، مگر اندر سے بکھرا ہوا ہوں۔",
-  "مجھے بھول جانے کا خوف ہے۔"
-];
-
 const affirmationList = [
   "آپ کافی ہیں، جیسے ہیں ویسے ہی۔",
   "یہ لمحہ بھی گزر جائے گا۔",
@@ -23,16 +16,22 @@ const affirmationList = [
   "کبھی کبھی کھو جانا بھی ٹھیک ہے۔"
 ];
 
-// Mood & Prompts
+// 🌀 Mood + Prompt + Affirmation
 function setMood(emoji) {
   document.getElementById('mood-result').textContent = `آپ کا موڈ: ${emoji}`;
 }
 
 function newPrompt() {
   const random = prompts[Math.floor(Math.random() * prompts.length)];
-  document.getElementById('pr
+  document.getElementById('prompt').textContent = random;
+}
 
-  
+function showAffirmation() {
+  const random = affirmationList[Math.floor(Math.random() * affirmationList.length)];
+  document.getElementById('affirmation').textContent = random;
+}
+
+// 🧘‍♂️ Timer + Breathing Logic
 let timerInterval;
 let timeLeft = 0;
 let breathingStarted = false;
@@ -46,6 +45,10 @@ const affirmations = {
   hold: ["یہ لمحہ آپ کا ہے۔", "ابھی بس محسوس کریں۔", "خاموشی میں سکون ہے۔"],
   exhale: ["جانے دیں...", "سکون ہے آپ میں۔", "پریشانیاں ہوا کی طرح اڑ رہی ہیں۔"]
 };
+
+function getRandom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
 
 function startBreathingCycle() {
   if (!box || breathingPaused) return;
@@ -71,10 +74,6 @@ function startBreathingCycle() {
   }, 4000);
 }
 
-function getRandom(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
-
 function startTimer() {
   const input = parseInt(document.getElementById('timeInput').value);
   if (isNaN(input) || input <= 0) return;
@@ -84,10 +83,7 @@ function startTimer() {
   timeLeft = input * 60;
   updateCountdown();
 
-  // 🔄 Reset breathing state
   breathingPaused = false;
-
-  // 🌬️ Always restart breathing on start
   startBreathingCycle();
   breathingStarted = true;
 
@@ -97,8 +93,8 @@ function startTimer() {
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
       clearTimeout(breathingTimeout);
-      breathingStarted = false;
       breathingPaused = true;
+      breathingStarted = false;
       alert("⏳ وقت مکمل ہوا! سکون سے سانس لیں۔");
     }
   }, 1000);
@@ -125,16 +121,9 @@ function updateCountdown() {
   const minutes = Math.floor(timeLeft / 60).toString().padStart(2, '0');
   const seconds = (timeLeft % 60).toString().padStart(2, '0');
   document.getElementById('countdown').textContent = `${minutes}:${seconds}`;
-}ompt').textContent = random;
 }
 
-function sendSecret() {
-  const userSecret = document.getElementById('userSecret').value.trim();
-
-  
- 
-
-// 🎵 Volume + UI Initializations
+// 🎵 Audio + UI Setup
 window.addEventListener("DOMContentLoaded", () => {
   const audio = document.getElementById("audioPlayer");
   const slider = document.getElementById("volumeSlider");
@@ -146,13 +135,13 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 🌙 Light/Dark Mode Toggle
+  // 🌙 Mode Toggle
   const toggle = document.getElementById("modeToggle");
   toggle.addEventListener("change", () => {
     document.body.classList.toggle("light-mode", toggle.checked);
   });
 
-  // 📈 Scroll Progress Bar
+  // 📈 Scroll Bar
   window.addEventListener("scroll", () => {
     const scrollBar = document.getElementById("scrollBar");
     const totalHeight = document.body.scrollHeight - window.innerHeight;
@@ -160,7 +149,7 @@ window.addEventListener("DOMContentLoaded", () => {
     scrollBar.style.width = `${progress}%`;
   });
 
-  // 🔮 Scroll Animations
+  // ✨ Scroll Reveal Animation
   const sections = document.querySelectorAll(".section");
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -172,15 +161,12 @@ window.addEventListener("DOMContentLoaded", () => {
   }, { threshold: 0.2 });
   sections.forEach(section => observer.observe(section));
 
-  // 🌈 Button Glow Random Color
+  // 🌈 Random Glow
   function getRandomGlowColor() {
     const colors = [
-      'rgba(255, 99, 132, 0.8)',
-      'rgba(54, 162, 235, 0.8)',
-      'rgba(255, 206, 86, 0.8)',
-      'rgba(75, 192, 192, 0.8)',
-      'rgba(153, 102, 255, 0.8)',
-      'rgba(255, 159, 64, 0.8)',
+      'rgba(255, 99, 132, 0.8)', 'rgba(54, 162, 235, 0.8)',
+      'rgba(255, 206, 86, 0.8)', 'rgba(75, 192, 192, 0.8)',
+      'rgba(153, 102, 255, 0.8)', 'rgba(255, 159, 64, 0.8)',
       'rgba(0, 255, 140, 0.8)'
     ];
     return colors[Math.floor(Math.random() * colors.length)];
