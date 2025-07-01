@@ -192,12 +192,20 @@ body.light-mode .phase-exhale { color: #b30000; background-color: rgba(255, 100,
   background: #00adb5;
   border: none;
   color: white;
-  padding: 10px 14px;
+  padding: 6px 8px;
   border-radius: 50%;
   cursor: pointer;
+  font-size: 14px;
+  width: 34px;
+  height: 34px;
   box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
   transition: transform 0.3s;
 }
+
+.player-controls button:hover {
+  transform: scale(1.1);
+}
+
 .player-controls button:hover {
   transform: scale(1.1);
 }
