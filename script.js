@@ -262,7 +262,6 @@ document.getElementById("muteBtn").addEventListener("click", () => {
   document.getElementById("muteBtn").textContent = audio.muted ? "🔇" : "🔊";
 });
 
-document.getElementById("downloadBtn").href = audio.src;
 
 document.getElementById("prevTrack").addEventListener("click", () => {
   audio.currentTime = 0;
