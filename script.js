@@ -46,7 +46,7 @@ function setMood(emoji) {
   document.getElementById('mood-result').textContent = result;
 }
 
-// 🧠 Reflection Prompts
+// Reflection Prompts
 const prompts = [
   "آپ اس وقت واقعی کیا محسوس کر رہے ہیں؟", "ایسی کون سی چیز ہے جسے آپ مسلسل مؤخر کر رہے ہیں؟",
   "آپ کس کو یاد کرتے ہیں لیکن بتایا نہیں؟", "کیا چیز آپ کو زندہ محسوس کرواتی ہے؟",
@@ -59,7 +59,7 @@ function newPrompt() {
   document.getElementById("prompt").textContent = prompt;
 }
 
-// 💖 Affirmations
+// Affirmations
 const affirmationList = [
   "آپ کافی ہیں، جیسے ہیں ویسے ہی۔", "یہ لمحہ بھی گزر جائے گا۔",
   "آپ اپنی سوچ سے زیادہ مضبوط ہیں۔", "کبھی کبھی کھو جانا بھی ٹھیک ہے۔"
@@ -70,7 +70,7 @@ function showAffirmation() {
   document.getElementById("affirmation").textContent = affirmation;
 }
 
-// 🧘 Breathing Logic
+// Breathing Logic
 const box = document.getElementById("breath-box");
 const affirmations = {
   inhale: [
@@ -92,8 +92,8 @@ function getRandom(arr) {
 }
 
 function fadeText(text, phaseClass) {
-  box.className = ''; // reset all classes
-  box.offsetWidth; // force reflow
+  box.className = '';
+  box.offsetWidth;
   box.textContent = text;
   box.classList.add("fade", phaseClass);
 }
@@ -204,7 +204,7 @@ window.addEventListener("DOMContentLoaded", () => {
       'rgba(153, 102, 255, 0.8)', 'rgba(255, 159, 64, 0.8)',
       'rgba(0, 255, 140, 0.8)'
     ];
-    return getRandom(colors);
+    return colors[Math.floor(Math.random() * colors.length)];
   }
 
   // 🎧 Audio Player Logic
@@ -242,87 +242,81 @@ window.addEventListener("DOMContentLoaded", () => {
     const sec = Math.floor(seconds % 60).toString().padStart(2, "0");
     return `${min}:${sec}`;
   }
-});
 
-document.getElementById("rewind").addEventListener("click", () => {
-  audio.currentTime = Math.max(0, audio.currentTime - 10);
-});
+  // Extra Buttons
+  document.getElementById("rewind").addEventListener("click", () => {
+    audio.currentTime = Math.max(0, audio.currentTime - 10);
+  });
 
-document.getElementById("forward").addEventListener("click", () => {
-  audio.currentTime = Math.min(audio.duration, audio.currentTime + 10);
-});
+  document.getElementById("forward").addEventListener("click", () => {
+    audio.currentTime = Math.min(audio.duration, audio.currentTime + 10);
+  });
 
-document.getElementById("loopBtn").addEventListener("click", () => {
-  audio.loop = !audio.loop;
-  document.getElementById("loopBtn").style.background = audio.loop ? "#00adb5" : "";
-});
+  document.getElementById("loopBtn").addEventListener("click", () => {
+    audio.loop = !audio.loop;
+    document.getElementById("loopBtn").style.background = audio.loop ? "#00adb5" : "";
+  });
 
+  // Playlist Controls
+  const playlist = ["Music6.mp3", "music5.mp3", "Music4.mp3"];
+  let currentTrackIndex = 0;
 
-document.getElementById("prevTrack").addEventListener("click", () => {
-  audio.currentTime = 0;
-});
-
-const playlist = ["Music6.mp3", "music5.mp3", "Music4.mp3"];
-let currentTrackIndex = 0;
-const audio = document.getElementById("audio");
-
-// Play selected track
-function loadTrack(index) {
-  if (index >= 0 && index < playlist.length) {
-    currentTrackIndex = index;
-    audio.src = playlist[index];
-    audio.play();
+  function loadTrack(index) {
+    if (index >= 0 && index < playlist.length) {
+      currentTrackIndex = index;
+      audio.src = playlist[index];
+      audio.play();
+      playPauseBtn.textContent = "⏸️";
+    }
   }
-}
 
-// Next and Previous buttons
-document.getElementById("nextTrack").addEventListener("click", () => {
-  let next = (currentTrackIndex + 1) % playlist.length;
-  loadTrack(next);
-});
+  document.getElementById("nextTrack").addEventListener("click", () => {
+    const next = (currentTrackIndex + 1) % playlist.length;
+    loadTrack(next);
+  });
 
-document.getElementById("prevTrack").addEventListener("click , () => {
-  let prev = (currentTrackIndex - 1 + playlist.length) % playlist.length;
-  loadTrack(prev);
-});
+  document.getElementById("prevTrack").addEventListener("click", () => {
+    const prev = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+    loadTrack(prev);
+  });
 
-// Start with first track
-loadTrack(0);
+  loadTrack(0);
 
+  // 🎵 Beat Visualizer
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const source = audioCtx.createMediaElementSource(audio);
+  const analyser = audioCtx.createAnalyser();
+  const playerBox = document.querySelector('.custom-player');
 
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-const source = audioCtx.createMediaElementSource(audio);
-const analyser = audioCtx.createAnalyser();
-const playerBox = document.querySelector('.custom-player');
+  source.connect(analyser);
+  analyser.connect(audioCtx.destination);
+  analyser.fftSize = 512;
 
-source.connect(analyser);
-analyser.connect(audioCtx.destination);
-analyser.fftSize = 512;
+  const bufferLength = analyser.frequencyBinCount;
+  const dataArray = new Uint8Array(bufferLength);
 
-const bufferLength = analyser.frequencyBinCount;
-const dataArray = new Uint8Array(bufferLength);
+  function detectBeat() {
+    requestAnimationFrame(detectBeat);
+    analyser.getByteFrequencyData(dataArray);
 
-function detectBeat() {
-  requestAnimationFrame(detectBeat);
-  analyser.getByteFrequencyData(dataArray);
+    let bassEnergy = 0;
+    for (let i = 0; i < 10; i++) {
+      bassEnergy += dataArray[i];
+    }
+    bassEnergy = bassEnergy / 10;
 
-  let bassEnergy = 0;
-  for (let i = 0; i < 10; i++) {
-    bassEnergy += dataArray[i];
+    if (bassEnergy > 160) {
+      playerBox.style.boxShadow = "0 0 25px rgba(0, 255, 255, 0.8)";
+      playerBox.style.transform = "scale(1.04)";
+    } else {
+      playerBox.style.boxShadow = "0 0 8px rgba(0, 255, 255, 0.2)";
+      playerBox.style.transform = "scale(1)";
+    }
   }
-  bassEnergy = bassEnergy / 10;
 
-  if (bassEnergy > 160) {
-    playerBox.style.boxShadow = "0 0 25px rgba(0, 255, 255, 0.8)";
-    playerBox.style.transform = "scale(1.04)";
-  } else {
-    playerBox.style.boxShadow = "0 0 8px rgba(0, 255, 255, 0.2)";
-    playerBox.style.transform = "scale(1)";
-  }
-}
-
-audio.addEventListener("play", () => {
-  audioCtx.resume().then(() => {
-    detectBeat();
+  audio.addEventListener("play", () => {
+    audioCtx.resume().then(() => {
+      detectBeat();
+    });
   });
 });
