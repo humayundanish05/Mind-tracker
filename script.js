@@ -26,7 +26,7 @@ const moodResponses = {
   "میں کھیل نہیں، ایک چیلنج ہوں۔ 🎲💪",
   "میں نظر نہیں آتا، مگر محسوس ضرور ہوتا ہوں۔ 🌫️⚡" 
   ]
-},
+};
 function setMood(emoji) {
   const responses = moodResponses[emoji];
   const result = responses?.length
