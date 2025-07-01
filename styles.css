@@ -1,4 +1,4 @@
-/* Urdu Font & Base Theme */
+/* 🖋️ Base Urdu Font & Theme */
 body {
   font-family: 'Noto Nastaliq Urdu', serif;
   background: radial-gradient(circle at top left, #1a1a2e, #16213e);
@@ -10,7 +10,7 @@ body {
   transition: background 0.4s, color 0.4s;
 }
 
-/* Light Mode Styling */
+/* 🌞 Light Mode */
 body.light-mode {
   background: #f2f2f2;
   color: #222;
@@ -28,20 +28,19 @@ body.light-mode button {
   color: #fff;
   box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
 }
-
 body.light-mode button:hover {
   transform: scale(1.05);
   box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
 }
 
-/* Container */
+/* 📦 Container */
 .container {
   max-width: 800px;
   margin: auto;
   padding: 20px;
 }
 
-/* Section Animations */
+/* 🎬 Section Animation */
 .section {
   background: rgba(255, 255, 255, 0.05);
   padding: 20px;
@@ -59,7 +58,7 @@ body.light-mode button:hover {
   }
 }
 
-/* 🌈 Rainbow Animated Buttons — sab buttons except emoji-btn */
+/* 🌈 Rainbow Button (except emojis) */
 button:not(.emoji-btn) {
   padding: 12px 24px;
   margin-top: 10px;
@@ -74,153 +73,63 @@ button:not(.emoji-btn) {
   animation: rainbowButton 8s ease infinite, fadeInUp 0.6s ease forwards;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 button:not(.emoji-btn):hover {
   transform: scale(1.05);
   box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
 }
-
-/* 🎭 Mood Button Container & Emoji Layout */
-.mood-options {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: nowrap; /* Force all emojis to stay in one line */
-}
-
-/* 🎭 Mood Emoji Buttons */
-.emoji-btn {
-  background: rgba(255, 255, 255, 0.08);
-  color: white;
-  font-size: 22px; /* slightly smaller */
-  border: none;
-  border-radius: 10px;
-  padding: 8px 12px;
-  margin: 4px;
-  cursor: pointer;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  width: 50px;
-  height: 50px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.emoji-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 18px rgba(255, 255, 255, 0.2);
-}
-.emoji-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 18px rgba(255, 255, 255, 0.2);
-}
-
-/* 🌈 Rainbow Animation */
 @keyframes rainbowButton {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* 🧘 Timer Button Group - Single Line Layout */
+/* 🎭 Mood Emoji Layout */
+.mood-options {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+.emoji-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  font-size: 22px;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin: 4px;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.emoji-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.2);
+}
+
+/* ⏱️ Timer Buttons */
 .timer-buttons {
   display: flex;
   justify-content: center;
   gap: 12px;
-  flex-wrap: nowrap; /* ensure all stay on same line */
+  flex-wrap: nowrap;
   margin-top: 10px;
 }
-
 .timer-buttons button {
   flex-shrink: 0;
   min-width: 90px;
 }
-
-/* 🔄 Fade Transition for Breathing */
-#breath-box.fade {
-  opacity: 0;
-  transition: opacity 0.6s ease-in-out;
-}
-#breath-box.fade.phase-inhale,
-#breath-box.fade.phase-hold,
-#breath-box.fade.phase-exhale {
-  opacity: 1;
-  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
-}
-
-/* 🎧 Custom Audio Player Styles */
-.custom-player {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
-  backdrop-filter: blur(6px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out; /* 👈 Add this line */
-}
-
-.player-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-}
-
-.player-controls button {
-  background: #00adb5;
-  border: none;
-  color: white;
-  padding: 10px 14px;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
-  transition: transform 0.3s;
-}
-
-
-.player-controls button:hover {
-  transform: scale(1.1);
-}
-
-.player-controls input[type="range"] {
-  flex-grow: 1;
-  height: 6px;
-  border-radius: 5px;
-  background: linear-gradient(90deg, #ff6ec4, #67d3f5, #76f7bf);
-  background-size: 300% 300%;
-  animation: rainbowSlider 8s linear infinite;
-  outline: none;
-}
-
-.volume-container {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.volume-container label {
-  color: #aaffff;
-}
-
-.volume-container input[type="range"] {
-  width: 120px;
-  height: 6px;
-  border-radius: 5px;
-  background: #ccc;
-}
-
-/* Countdown */
 #countdown {
   font-size: 2em;
   margin: 10px 0;
 }
 
-/* Breathing Box */
+/* 🌬️ Breathing Box */
 #breath-box {
   margin: 30px auto;
   padding: 20px 40px;
@@ -254,20 +163,54 @@ button:not(.emoji-btn):hover {
   color: #ffc9c9;
   box-shadow: 0 0 20px 6px rgba(255, 100, 100, 0.6);
 }
-body.light-mode .phase-inhale {
-  background-color: rgba(0, 255, 150, 0.2);
-  color: #007d5e;
+/* Light Mode breathing */
+body.light-mode .phase-inhale { color: #007d5e; background-color: rgba(0, 255, 150, 0.2); }
+body.light-mode .phase-hold { color: #888100; background-color: rgba(255, 255, 0, 0.2); }
+body.light-mode .phase-exhale { color: #b30000; background-color: rgba(255, 100, 100, 0.2); }
+
+/* 🎧 Custom Player */
+.custom-player {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+  backdrop-filter: blur(6px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  transition: box-shadow 0.2s, transform 0.2s;
 }
-body.light-mode .phase-hold {
-  background-color: rgba(255, 255, 0, 0.2);
-  color: #888100;
+.player-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
 }
-body.light-mode .phase-exhale {
-  background-color: rgba(255, 100, 100, 0.2);
-  color: #b30000;
+.player-controls button {
+  background: #00adb5;
+  border: none;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+  transition: transform 0.3s;
+}
+.player-controls button:hover {
+  transform: scale(1.1);
+}
+.player-controls input[type="range"] {
+  flex-grow: 1;
+  height: 6px;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #ff6ec4, #67d3f5, #76f7bf);
+  background-size: 300% 300%;
+  animation: rainbowSlider 8s linear infinite;
 }
 
-/* Volume Control - Enhanced Vibes */
+/* 🔊 Volume Control */
 .volume-control {
   margin-top: 25px;
   padding: 15px;
@@ -279,16 +222,13 @@ body.light-mode .phase-exhale {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  animation: fadeInUp 0.6s ease forwards;
 }
-
 .volume-control label {
   color: #aaffff;
   font-size: 16px;
   font-weight: bold;
   text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
 }
-
 .volume-control input[type="range"] {
   -webkit-appearance: none;
   width: 60%;
@@ -297,11 +237,8 @@ body.light-mode .phase-exhale {
   background: linear-gradient(90deg, #ff6ec4, #7873f5, #67d3f5, #76f7bf, #fcb045, #ff6ec4);
   background-size: 300% 300%;
   animation: rainbowSlider 10s linear infinite;
-  outline: none;
-  transition: box-shadow 0.3s ease-in-out;
   box-shadow: 0 0 10px rgba(0,255,255,0.3);
 }
-
 .volume-control input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 20px;
@@ -310,32 +247,29 @@ body.light-mode .phase-exhale {
   background: #ffffff;
   box-shadow: 0 0 10px rgba(255,255,255,0.9);
   cursor: pointer;
-  transition: background 0.3s ease;
 }
 .volume-control input[type="range"]:hover::-webkit-slider-thumb {
   background: #aaffff;
 }
-
 @keyframes rainbowSlider {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* Footer */
-.footer {
-  text-align: center;
-  padding: 20px;
-  font-size: 14px;
-  color: #aaa;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  margin-top: 40px;
-}
-.footer strong {
-  color: #ffffff;
+/* 📊 Scroll Progress Bar */
+#scrollBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 5px;
+  background: #00adb5;
+  z-index: 9999;
+  width: 0%;
+  transition: width 0.25s ease-out;
 }
 
-/* Toggle Switch */
+/* 🌓 Toggle */
 .toggle-container {
   position: fixed;
   top: 10px;
@@ -362,10 +296,7 @@ body.light-mode .phase-exhale {
 .slider {
   position: absolute;
   cursor: pointer;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  top: 0; right: 0; bottom: 0; left: 0;
   background-color: #ccc;
   transition: .4s;
   border-radius: 24px;
@@ -373,10 +304,8 @@ body.light-mode .phase-exhale {
 .slider:before {
   position: absolute;
   content: "";
-  height: 18px;
-  width: 18px;
-  right: 3px;
-  bottom: 3px;
+  height: 18px; width: 18px;
+  right: 3px; bottom: 3px;
   background-color: white;
   transition: .4s;
   border-radius: 50%;
@@ -388,27 +317,15 @@ input:checked + .slider:before {
   transform: translateX(-22px);
 }
 
-/* Scroll Progress Bar */
-#scrollBar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 5px;
-  background: #00adb5;
-  z-index: 9999;
-  width: 0%;
-  transition: width 0.25s ease-out;
+/* 🦶 Footer */
+.footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  color: #aaa;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 40px;
 }
-
-/* Audio Pulse */
-@keyframes diamondPulse {
-  0% {
-    box-shadow: 0 0 10px rgba(185, 242, 255, 0.6);
-  }
-  50% {
-    box-shadow: 0 0 25px 10px rgba(185, 242, 255, 1);
-  }
-  100% {
-    box-shadow: 0 0 10px rgba(185, 242, 255, 0.6);
-  }
-  }
+.footer strong {
+  color: #ffffff;
+                         }
