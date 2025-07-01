@@ -267,7 +267,7 @@ document.getElementById("prevTrack").addEventListener("click", () => {
   audio.currentTime = 0;
 });
 
-const playlist = ["audio/Music6.mp3", "audio/music5.mp3", "audio/Music4.mp3"];
+const playlist = ["Music6.mp3", "music5.mp3", "Music4.mp3"];
 let currentTrackIndex = 0;
 const audio = document.getElementById("audio");
 
