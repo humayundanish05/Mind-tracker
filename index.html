@@ -9,10 +9,10 @@
 </head>
 <body>
 
-  <!-- Scroll Progress Bar -->
+  <!-- 🔵 Scroll Progress Bar -->
   <div id="scrollBar"></div>
 
-  <!-- Dark Mode Toggle -->
+  <!-- 🌗 Dark Mode Toggle -->
   <div class="toggle-container">
     <label class="switch">
       <input type="checkbox" id="modeToggle">
@@ -21,88 +21,89 @@
     <span class="toggle-label">لائٹ / ڈارک</span>
   </div>
 
+  <!-- 🌌 Main Container -->
   <div class="container">
     <h1>welcome to existence 🌌</h1>
 
-    <!-- Mood Tracker -->
+    <!-- 🎭 Mood Tracker -->
     <section class="section mood">
       <h2>🎭 آج آپ کیسا محسوس کر رہے ہیں؟</h2>
       <div class="mood-options">
-  <button class="emoji-btn" onclick="setMood('😊')">😊</button>
-  <button class="emoji-btn" onclick="setMood('😡')">😡</button>
-  <button class="emoji-btn" onclick="setMood('😂')">😂</button>
-  <button class="emoji-btn" onclick="setMood('🥲')">🥲</button>
+        <button class="emoji-btn" onclick="setMood('😊')">😊</button>
+        <button class="emoji-btn" onclick="setMood('😡')">😡</button>
+        <button class="emoji-btn" onclick="setMood('😂')">😂</button>
+        <button class="emoji-btn" onclick="setMood('🥲')">🥲</button>
       </div>
       <p id="mood-result"></p>
     </section>
 
-    <!-- Reflection Prompt -->
+    <!-- 💭 Reflection Prompt -->
     <section class="section reflection">
       <h2>💭 سوچنے کیلئے سوال</h2>
       <p id="prompt">نیچے کلک کریں</p>
       <button onclick="newPrompt()">سوال دکھائیں</button>
     </section>
 
-    <!-- Affirmation Drawer -->
+    <!-- 💖 Affirmation Drawer -->
     <section class="section affirm">
       <h2>💖 امید کی بات سنیں</h2>
       <button onclick="showAffirmation()">حوصلہ افزائی دیکھیں</button>
       <p id="affirmation"></p>
     </section>
 
-    <!-- Meditation Timer -->
+    <!-- 🧘 Meditation Timer -->
     <section class="section timer">
-      <h2>🧘 meditation timer </h2>
+      <h2>🧘 meditation timer</h2>
       <label for="timeInput">وقت منتخب کریں (منٹ):</label>
       <input type="number" id="timeInput" value="5" min="1" max="60" />
       <div id="countdown">00:00</div>
       <div class="timer-buttons">
-  <button onclick="startTimer()">شروع کریں</button>
-  <button onclick="pauseTimer()">روکیں</button>
-  <button onclick="resetTimer()">ری سیٹ</button>
+        <button onclick="startTimer()">شروع کریں</button>
+        <button onclick="pauseTimer()">روکیں</button>
+        <button onclick="resetTimer()">ری سیٹ</button>
       </div>
     </section>
 
-    <!-- 🌬️ Breathing Meditation Section -->
+    <!-- 🌬️ Breathing Meditation -->
     <section class="section breathing">
       <div id="breath-box" class="fade">ٹائمر کا "شروع" بٹن دبائیں</div>
     </section>
+
+    <!-- 🎶 Music Player -->
+    <section class="section music">
+      <h2>🎶 روح کی پرواز</h2>
+      <div class="custom-player">
+        <audio id="audio"></audio>
+
+        <div class="player-controls">
+          <button id="prevTrack">⏮</button>
+          <button id="nextTrack">⏭</button>
+          <button id="rewind">⏪</button>
+          <button id="playPauseBtn">▶️</button>
+          <button id="forward">⏩</button>
+          <button id="loopBtn">🔁</button>
+        </div>
+
+        <div class="player-controls">
+          <span id="currentTime">00:00</span>
+          <input type="range" id="seekBar" value="0" step="1">
+          <span id="duration">00:00</span>
+        </div>
+
+        <div class="volume-control">
+          <label for="volumeSlider">🔊 آواز:</label>
+          <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
+        </div>
+      </div>
+    </section>
   </div>
 
-  <!-- 🎶 Music Player -->
-<section class="section music">
-  <h2>🎶 روح کی پرواز</h2>
-  <div class="custom-player">
-    <audio id="audio"></audio>
-
-    <div class="player-controls">
-      <button id="prevTrack">⏮</button>
-      <button id="nextTrack">⏭</button>
-      <button id="rewind">⏪</button>
-      <button id="playPauseBtn">▶️</button>
-      <button id="forward">⏩</button>
-      <button id="loopBtn">🔁</button>
-      
-    
-    </div>
-
-    <div class="player-controls">
-      <span id="currentTime">00:00</span>
-      <input type="range" id="seekBar" value="0" step="1">
-      <span id="duration">00:00</span>
-    </div>
-
-    <div class="volume-control">
-      <label for="volumeSlider">🔊 آواز:</label>
-      <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
-    </div>
-  </div>
-</section>
-
-  <script src="script.js"></script>
-
+  <!-- 🧾 Footer -->
   <footer class="footer">
     <p>🌌 تخلیق کردہ: <strong>Humayun Danish</strong></p>
   </footer>
+
+  <!-- 🧠 JavaScript -->
+  <script src="script.js"></script>
 </body>
 </html>
