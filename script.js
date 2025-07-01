@@ -281,7 +281,7 @@ document.getElementById("nextTrack").addEventListener("click", () => {
   loadTrack(next);
 });
 
-document.getElementById("prevTrack").addEventListener("click () => {
+document.getElementById("prevTrack").addEventListener("click , () => {
   let prev = (currentTrackIndex - 1 + playlist.length) % playlist.length;
   loadTrack(prev);
 });
