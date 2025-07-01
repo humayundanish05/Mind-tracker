@@ -1,4 +1,4 @@
-// ✅ Mood Responses (no duplication)
+// ✅ Mood Responses
 const moodResponses = {
   "😊": [
     "خوشی آپ کے اندر سے آتی ہے۔ 😊", "زندگی کے یہ لمحے قیمتی ہیں۔ 🌸", "آپ کی مسکراہٹ روشنی ہے۔ ✨",
@@ -308,11 +308,11 @@ function detectBeat() {
   if (bassEnergy > 160) {
     playerBox.style.boxShadow = "0 0 25px rgba(0, 255, 255, 0.8)";
     playerBox.style.transform = "scale(1.04)";
-    playerBox.classList.add("rainbow-beat"); // 👈 rainbow animation on beat
+    playerBox.classList.add("rainbow-beat");
   } else {
     playerBox.style.boxShadow = "0 0 8px rgba(0, 255, 255, 0.2)";
     playerBox.style.transform = "scale(1)";
-    playerBox.classList.remove("rainbow-beat"); // 👈 remove animation if no beat
+    playerBox.classList.remove("rainbow-beat");
   }
 }
 
