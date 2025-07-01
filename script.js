@@ -282,41 +282,42 @@ window.addEventListener("DOMContentLoaded", () => {
 
   loadTrack(0);
 
-  // 🎵 Beat Visualizer
-  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  const source = audioCtx.createMediaElementSource(audio);
-  const analyser = audioCtx.createAnalyser();
-  const playerBox = document.querySelector('.custom-player');
+  // 🎵 Beat Visualizer with Rainbow Animation
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const source = audioCtx.createMediaElementSource(audio);
+const analyser = audioCtx.createAnalyser();
+const playerBox = document.querySelector('.custom-player');
 
-  source.connect(analyser);
-  analyser.connect(audioCtx.destination);
-  analyser.fftSize = 512;
+source.connect(analyser);
+analyser.connect(audioCtx.destination);
+analyser.fftSize = 512;
 
-  const bufferLength = analyser.frequencyBinCount;
-  const dataArray = new Uint8Array(bufferLength);
+const bufferLength = analyser.frequencyBinCount;
+const dataArray = new Uint8Array(bufferLength);
 
-  function detectBeat() {
-    requestAnimationFrame(detectBeat);
-    analyser.getByteFrequencyData(dataArray);
+function detectBeat() {
+  requestAnimationFrame(detectBeat);
+  analyser.getByteFrequencyData(dataArray);
 
-    let bassEnergy = 0;
-    for (let i = 0; i < 10; i++) {
-      bassEnergy += dataArray[i];
-    }
-    bassEnergy = bassEnergy / 10;
-
-    if (bassEnergy > 160) {
-      playerBox.style.boxShadow = "0 0 25px rgba(0, 255, 255, 0.8)";
-      playerBox.style.transform = "scale(1.04)";
-    } else {
-      playerBox.style.boxShadow = "0 0 8px rgba(0, 255, 255, 0.2)";
-      playerBox.style.transform = "scale(1)";
-    }
+  let bassEnergy = 0;
+  for (let i = 0; i < 10; i++) {
+    bassEnergy += dataArray[i];
   }
+  bassEnergy = bassEnergy / 10;
 
-  audio.addEventListener("play", () => {
-    audioCtx.resume().then(() => {
-      detectBeat();
-    });
+  if (bassEnergy > 160) {
+    playerBox.style.boxShadow = "0 0 25px rgba(0, 255, 255, 0.8)";
+    playerBox.style.transform = "scale(1.04)";
+    playerBox.classList.add("rainbow-beat"); // 👈 rainbow animation on beat
+  } else {
+    playerBox.style.boxShadow = "0 0 8px rgba(0, 255, 255, 0.2)";
+    playerBox.style.transform = "scale(1)";
+    playerBox.classList.remove("rainbow-beat"); // 👈 remove animation if no beat
+  }
+}
+
+audio.addEventListener("play", () => {
+  audioCtx.resume().then(() => {
+    detectBeat();
   });
 });
