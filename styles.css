@@ -178,7 +178,7 @@ button:not(.emoji-btn):hover {
   box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
   transition: transform 0.3s;
 }
-/* 🎵 Download Button Style */
+/* 🎵 Download Button Style *
 #downloadBtn {
   background: #00adb5;
   border-radius: 50%;
@@ -195,7 +195,7 @@ button:not(.emoji-btn):hover {
 #downloadBtn:hover {
   transform: scale(1.1);
 }
-
+*/
 
 .player-controls button:hover {
   transform: scale(1.1);
