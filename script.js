@@ -257,11 +257,6 @@ document.getElementById("loopBtn").addEventListener("click", () => {
   document.getElementById("loopBtn").style.background = audio.loop ? "#00adb5" : "";
 });
 
-document.getElementById("muteBtn").addEventListener("click", () => {
-  audio.muted = !audio.muted;
-  document.getElementById("muteBtn").textContent = audio.muted ? "🔇" : "🔊";
-});
-
 
 document.getElementById("prevTrack").addEventListener("click", () => {
   audio.currentTime = 0;
@@ -286,7 +281,7 @@ document.getElementById("nextTrack").addEventListener("click", () => {
   loadTrack(next);
 });
 
-document.getElementById("prevTrack").addEventListener("click", () => {
+document.getElementById("prevTrack").addEventListener("click () => {
   let prev = (currentTrackIndex - 1 + playlist.length) % playlist.length;
   loadTrack(prev);
 });
