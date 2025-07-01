@@ -293,3 +293,41 @@ document.getElementById("prevTrack").addEventListener("click", () => {
 
 // Start with first track
 loadTrack(0);
+
+
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const source = audioCtx.createMediaElementSource(audio);
+const analyser = audioCtx.createAnalyser();
+const playerBox = document.querySelector('.custom-player');
+
+source.connect(analyser);
+analyser.connect(audioCtx.destination);
+analyser.fftSize = 512;
+
+const bufferLength = analyser.frequencyBinCount;
+const dataArray = new Uint8Array(bufferLength);
+
+function detectBeat() {
+  requestAnimationFrame(detectBeat);
+  analyser.getByteFrequencyData(dataArray);
+
+  let bassEnergy = 0;
+  for (let i = 0; i < 10; i++) {
+    bassEnergy += dataArray[i];
+  }
+  bassEnergy = bassEnergy / 10;
+
+  if (bassEnergy > 160) {
+    playerBox.style.boxShadow = "0 0 25px rgba(0, 255, 255, 0.8)";
+    playerBox.style.transform = "scale(1.04)";
+  } else {
+    playerBox.style.boxShadow = "0 0 8px rgba(0, 255, 255, 0.2)";
+    playerBox.style.transform = "scale(1)";
+  }
+}
+
+audio.addEventListener("play", () => {
+  audioCtx.resume().then(() => {
+    detectBeat();
+  });
+});
