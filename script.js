@@ -266,3 +266,30 @@ document.getElementById("muteBtn").addEventListener("click", () => {
 document.getElementById("prevTrack").addEventListener("click", () => {
   audio.currentTime = 0;
 });
+
+const playlist = ["Music6.mp3", "Music5.mp3", "Music4.mp3"];
+let currentTrackIndex = 0;
+const audio = document.getElementById("audio");
+
+// Play selected track
+function loadTrack(index) {
+  if (index >= 0 && index < playlist.length) {
+    currentTrackIndex = index;
+    audio.src = playlist[index];
+    audio.play();
+  }
+}
+
+// Next and Previous buttons
+document.getElementById("nextTrack").addEventListener("click", () => {
+  let next = (currentTrackIndex + 1) % playlist.length;
+  loadTrack(next);
+});
+
+document.getElementById("prevTrack").addEventListener("click", () => {
+  let prev = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+  loadTrack(prev);
+});
+
+// Start with first track
+loadTrack(0);
