@@ -185,7 +185,7 @@ body.light-mode .phase-exhale { color: #b30000; background-color: rgba(255, 100,
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 5px;
   width: 100%;
 }
 .player-controls button {
