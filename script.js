@@ -243,3 +243,27 @@ window.addEventListener("DOMContentLoaded", () => {
     return `${min}:${sec}`;
   }
 });
+
+document.getElementById("rewind").addEventListener("click", () => {
+  audio.currentTime = Math.max(0, audio.currentTime - 10);
+});
+
+document.getElementById("forward").addEventListener("click", () => {
+  audio.currentTime = Math.min(audio.duration, audio.currentTime + 10);
+});
+
+document.getElementById("loopBtn").addEventListener("click", () => {
+  audio.loop = !audio.loop;
+  document.getElementById("loopBtn").style.background = audio.loop ? "#00adb5" : "";
+});
+
+document.getElementById("muteBtn").addEventListener("click", () => {
+  audio.muted = !audio.muted;
+  document.getElementById("muteBtn").textContent = audio.muted ? "🔇" : "🔊";
+});
+
+document.getElementById("downloadBtn").href = audio.src;
+
+document.getElementById("prevTrack").addEventListener("click", () => {
+  audio.currentTime = 0;
+});
