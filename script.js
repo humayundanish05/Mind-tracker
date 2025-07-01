@@ -38,25 +38,19 @@ const moodResponses = {
   ]
 };
 
-// ✅ Mood Function
 function setMood(emoji) {
   const responses = moodResponses[emoji];
-  if (responses && responses.length > 0) {
-    const random = responses[Math.floor(Math.random() * responses.length)];
-    document.getElementById('mood-result').textContent = random;
-  } else {
-    document.getElementById('mood-result').textContent = `${emoji} آپ کا موڈ معلوم نہیں ہو سکا۔`;
-  }
+  const result = responses?.length
+    ? responses[Math.floor(Math.random() * responses.length)]
+    : `${emoji} آپ کا موڈ معلوم نہیں ہو سکا۔`;
+  document.getElementById('mood-result').textContent = result;
 }
 
-// 💬 Reflection Prompts
+// 🧠 Reflection Prompts
 const prompts = [
-  "آپ اس وقت واقعی کیا محسوس کر رہے ہیں؟",
-  "ایسی کون سی چیز ہے جسے آپ مسلسل مؤخر کر رہے ہیں؟",
-  "آپ کس کو یاد کرتے ہیں لیکن بتایا نہیں؟",
-  "کیا چیز آپ کو زندہ محسوس کرواتی ہے؟",
-  "آپ جذباتی طور پر کس چیز سے بچ رہے ہیں؟",
-  "آخری بار کب کسی نے آپ کو واقعی سمجھا؟",
+  "آپ اس وقت واقعی کیا محسوس کر رہے ہیں؟", "ایسی کون سی چیز ہے جسے آپ مسلسل مؤخر کر رہے ہیں؟",
+  "آپ کس کو یاد کرتے ہیں لیکن بتایا نہیں؟", "کیا چیز آپ کو زندہ محسوس کرواتی ہے؟",
+  "آپ جذباتی طور پر کس چیز سے بچ رہے ہیں؟", "آخری بار کب کسی نے آپ کو واقعی سمجھا؟",
   "کون سی یاد آپ کو سکون دیتی ہے؟"
 ];
 
@@ -67,10 +61,8 @@ function newPrompt() {
 
 // 💖 Affirmations
 const affirmationList = [
-  "آپ کافی ہیں، جیسے ہیں ویسے ہی۔",
-  "یہ لمحہ بھی گزر جائے گا۔",
-  "آپ اپنی سوچ سے زیادہ مضبوط ہیں۔",
-  "کبھی کبھی کھو جانا بھی ٹھیک ہے۔"
+  "آپ کافی ہیں، جیسے ہیں ویسے ہی۔", "یہ لمحہ بھی گزر جائے گا۔",
+  "آپ اپنی سوچ سے زیادہ مضبوط ہیں۔", "کبھی کبھی کھو جانا بھی ٹھیک ہے۔"
 ];
 
 function showAffirmation() {
@@ -78,63 +70,43 @@ function showAffirmation() {
   document.getElementById("affirmation").textContent = affirmation;
 }
 
-// 🧘 Breathing Timer Logic
+// 🧘 Breathing Logic
 const box = document.getElementById("breath-box");
-
 const affirmations = {
   inhale: [
-    "آپ محفوظ ہیں۔", "آپ کافی ہیں جیسے ہیں۔", "روشنی آپ کے اندر ہے۔", "ہر سانس زندگی کی نعمت ہے۔",
-    "آپ پیار کے قابل ہیں۔", "آپ روشنی کا مرکز ہیں۔", "آپ مکمل ہیں۔", "آپ شکر گزار دل رکھتے ہیں۔",
-    "آپ اندر سے پر سکون ہیں۔", "آپ میں طاقت ہے۔"
+    "آپ محفوظ ہیں۔", "آپ کافی ہیں جیسے ہیں۔", "روشنی آپ کے اندر ہے۔",
+    "ہر سانس زندگی کی نعمت ہے۔", "آپ پیار کے قابل ہیں۔", "آپ مکمل ہیں۔"
   ],
   hold: [
-    "یہ لمحہ آپ کا ہے۔", "ابھی بس محسوس کریں۔", "خاموشی میں سکون ہے۔", "وقت رک گیا ہے، صرف آپ ہیں۔",
-    "دل کی دھڑکن سنیں۔", "یہی لمحہ کافی ہے۔", "سانس کے بیچ زندگی ہے۔", "خود کو گلے لگائیں۔",
-    "آپ توجہ کے قابل ہیں۔", "یہ لمحہ مقدس ہے۔"
+    "یہ لمحہ آپ کا ہے۔", "ابھی بس محسوس کریں۔", "خاموشی میں سکون ہے۔", "وقت رک گیا ہے، صرف آپ ہیں۔"
   ],
   exhale: [
-    "جانے دیں...", "سکون ہے آپ میں۔", "پریشانیاں ہوا کی طرح اڑ رہی ہیں۔", "غم ہوا میں گھل رہا ہے۔",
-    "تھکن کو آزاد کریں۔", "تناؤ کو چھوڑ دیں۔", "ہر سانس کے ساتھ نرمی آئے۔", "ہر فکر کو بہنے دیں۔",
-    "روشنی کو پھیلنے دیں۔", "خود کو آزاد کریں۔"
+    "جانے دیں...", "سکون ہے آپ میں۔", "پریشانیاں ہوا کی طرح اڑ رہی ہیں۔", "خود کو آزاد کریں۔"
   ]
 };
 
-let timerInterval;
-let timeLeft = 0;
-let breathingPaused = false;
-let breathingTimeout = null;
+let timerInterval, breathingTimeout, timeLeft = 0, breathingPaused = false;
 
 function getRandom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
 function fadeText(text, phaseClass) {
-  box.classList.remove("phase-inhale", "phase-hold", "phase-exhale");
-  box.classList.remove("fade");
-  void box.offsetWidth;
-  box.classList.add("fade");
+  box.className = ''; // reset all classes
+  box.offsetWidth; // force reflow
   box.textContent = text;
-
-  setTimeout(() => {
-    box.classList.add(phaseClass);
-  }, 50);
+  box.classList.add("fade", phaseClass);
 }
 
 function startBreathingCycle() {
   if (!box || breathingPaused) return;
-
   fadeText(getRandom(affirmations.inhale), 'phase-inhale');
-
   breathingTimeout = setTimeout(() => {
     if (breathingPaused) return;
-
     fadeText(getRandom(affirmations.hold), 'phase-hold');
-
     breathingTimeout = setTimeout(() => {
       if (breathingPaused) return;
-
       fadeText(getRandom(affirmations.exhale), 'phase-exhale');
-
       breathingTimeout = setTimeout(startBreathingCycle, 2000);
     }, 2000);
   }, 2000);
@@ -143,7 +115,6 @@ function startBreathingCycle() {
 function startTimer() {
   const input = parseInt(document.getElementById('timeInput').value);
   if (isNaN(input) || input <= 0) return;
-
   clearInterval(timerInterval);
   clearTimeout(breathingTimeout);
   timeLeft = input * 60;
@@ -180,59 +151,47 @@ function resetTimer() {
 }
 
 function updateCountdown() {
-  const minutes = Math.floor(timeLeft / 60).toString().padStart(2, '0');
-  const seconds = (timeLeft % 60).toString().padStart(2, '0');
-  document.getElementById('countdown').textContent = `${minutes}:${seconds}`;
+  const min = String(Math.floor(timeLeft / 60)).padStart(2, '0');
+  const sec = String(timeLeft % 60).padStart(2, '0');
+  document.getElementById('countdown').textContent = `${min}:${sec}`;
 }
 
-// 🌐 UI Events
+// 🌐 UI Setup
 window.addEventListener("DOMContentLoaded", () => {
-  const audio = document.getElementById("audioPlayer");
-  const slider = document.getElementById("volumeSlider");
+  const audio = document.getElementById("audio");
+  const volumeSlider = document.getElementById("volumeSlider");
 
-  if (audio && slider) {
-    audio.volume = parseFloat(slider.value);
-    slider.addEventListener("input", function () {
-      audio.volume = parseFloat(this.value);
+  if (audio && volumeSlider) {
+    audio.volume = parseFloat(volumeSlider.value);
+    volumeSlider.addEventListener("input", () => {
+      audio.volume = parseFloat(volumeSlider.value);
     });
   }
 
-  const toggle = document.getElementById("modeToggle");
-  toggle.addEventListener("change", () => {
-    document.body.classList.toggle("light-mode", toggle.checked);
+  document.getElementById("modeToggle").addEventListener("change", (e) => {
+    document.body.classList.toggle("light-mode", e.target.checked);
   });
 
   window.addEventListener("scroll", () => {
     const scrollBar = document.getElementById("scrollBar");
     const totalHeight = document.body.scrollHeight - window.innerHeight;
-    const progress = (window.scrollY / totalHeight) * 100;
-    scrollBar.style.width = `${progress}%`;
+    scrollBar.style.width = `${(window.scrollY / totalHeight) * 100}%`;
   });
 
-  const sections = document.querySelectorAll(".section");
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.animationDelay = "0.1s";
-        entry.target.classList.add("visible");
-      }
+      if (entry.isIntersecting) entry.target.classList.add("visible");
     });
   }, { threshold: 0.2 });
-  sections.forEach(section => observer.observe(section));
 
-  const allButtons = document.querySelectorAll("button");
-  allButtons.forEach(btn => {
-    if (btn.closest("#audioPlayer")) return;
+  document.querySelectorAll(".section").forEach(sec => observer.observe(sec));
 
+  // 🌟 Button Glow Effect
+  document.querySelectorAll("button").forEach(btn => {
     btn.addEventListener("click", () => {
       const color = getRandomGlowColor();
-      btn.classList.remove("active-glow");
-      void btn.offsetWidth;
       btn.style.boxShadow = `0 0 25px 10px ${color}`;
-      btn.classList.add("active-glow");
-
       setTimeout(() => {
-        btn.classList.remove("active-glow");
         btn.style.boxShadow = `0 0 10px ${color}`;
       }, 1600);
     });
@@ -245,49 +204,42 @@ window.addEventListener("DOMContentLoaded", () => {
       'rgba(153, 102, 255, 0.8)', 'rgba(255, 159, 64, 0.8)',
       'rgba(0, 255, 140, 0.8)'
     ];
-    return colors[Math.floor(Math.random() * colors.length)];
+    return getRandom(colors);
+  }
+
+  // 🎧 Audio Player Logic
+  const playPauseBtn = document.getElementById("playPauseBtn");
+  const seekBar = document.getElementById("seekBar");
+  const currentTimeEl = document.getElementById("currentTime");
+  const durationEl = document.getElementById("duration");
+
+  playPauseBtn.addEventListener("click", () => {
+    if (audio.paused) {
+      audio.play();
+      playPauseBtn.textContent = "⏸️";
+    } else {
+      audio.pause();
+      playPauseBtn.textContent = "▶️";
+    }
+  });
+
+  audio.addEventListener("loadedmetadata", () => {
+    seekBar.max = Math.floor(audio.duration);
+    durationEl.textContent = formatTime(audio.duration);
+  });
+
+  audio.addEventListener("timeupdate", () => {
+    seekBar.value = Math.floor(audio.currentTime);
+    currentTimeEl.textContent = formatTime(audio.currentTime);
+  });
+
+  seekBar.addEventListener("input", () => {
+    audio.currentTime = seekBar.value;
+  });
+
+  function formatTime(seconds) {
+    const min = Math.floor(seconds / 60).toString().padStart(2, "0");
+    const sec = Math.floor(seconds % 60).toString().padStart(2, "0");
+    return `${min}:${sec}`;
   }
 });
-
-
-// 🎧 Custom Audio Player Logic
-const audio = document.getElementById("audio");
-const playPauseBtn = document.getElementById("playPauseBtn");
-const seekBar = document.getElementById("seekBar");
-const currentTimeEl = document.getElementById("currentTime");
-const durationEl = document.getElementById("duration");
-const volumeSlider = document.getElementById("volumeSlider");
-
-playPauseBtn.addEventListener("click", () => {
-  if (audio.paused) {
-    audio.play();
-    playPauseBtn.textContent = "⏸️";
-  } else {
-    audio.pause();
-    playPauseBtn.textContent = "▶️";
-  }
-});
-
-audio.addEventListener("loadedmetadata", () => {
-  seekBar.max = Math.floor(audio.duration);
-  durationEl.textContent = formatTime(audio.duration);
-});
-
-audio.addEventListener("timeupdate", () => {
-  seekBar.value = Math.floor(audio.currentTime);
-  currentTimeEl.textContent = formatTime(audio.currentTime);
-});
-
-seekBar.addEventListener("input", () => {
-  audio.currentTime = seekBar.value;
-});
-
-volumeSlider.addEventListener("input", () => {
-  audio.volume = volumeSlider.value;
-});
-
-function formatTime(seconds) {
-  const min = Math.floor(seconds / 60).toString().padStart(2, "0");
-  const sec = Math.floor(seconds % 60).toString().padStart(2, "0");
-  return `${min}:${sec}`;
-}
