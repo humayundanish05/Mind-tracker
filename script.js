@@ -255,54 +255,68 @@ window.addEventListener("DOMContentLoaded", () => {
 
   loadTrack(0); // First track
 
-  // 🎵 Beat Visualizer
-  let audioCtx, source, analyser;
-  const playerBox = document.querySelector('.custom-player');
+// 🎵 Beat Visualizer (v3 - Animated Circles)
+const canvas = document.createElement("canvas");
+canvas.id = "visualizerCanvas";
+document.body.appendChild(canvas);
 
-  function setupBeatVisualizer() {
-    if (!audioCtx) {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      source = audioCtx.createMediaElementSource(audio);
-      analyser = audioCtx.createAnalyser();
+const ctx = canvas.getContext("2d");
+let audioContext;
+let analyser;
+let sourceNode;
+let dataArray;
+let bufferLength;
 
-      source.connect(analyser);
-      analyser.connect(audioCtx.destination);
-      analyser.fftSize = 512;
-    }
+function setupAudioVisualizer() {
+  audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  analyser = audioContext.createAnalyser();
+  sourceNode = audioContext.createMediaElementSource(audio);
+  sourceNode.connect(analyser);
+  analyser.connect(audioContext.destination);
+  analyser.fftSize = 256;
 
-    const bufferLength = analyser.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
+  bufferLength = analyser.frequencyBinCount;
+  dataArray = new Uint8Array(bufferLength);
 
-    function detectBeat() {
-      requestAnimationFrame(detectBeat);
-      analyser.getByteFrequencyData(dataArray);
+  drawVisualizer();
+}
 
-      let bassEnergy = 0;
-      for (let i = 0; i < 10; i++) {
-        bassEnergy += dataArray[i];
-      }
-      bassEnergy = bassEnergy / 10;
+function drawVisualizer() {
+  requestAnimationFrame(drawVisualizer);
 
-      if (bassEnergy > 160) {
-        playerBox.style.boxShadow = "0 0 25px rgba(0, 255, 255, 0.8)";
-        playerBox.style.transform = "scale(1.04)";
-        playerBox.classList.add("rainbow-beat");
-      } else {
-        playerBox.style.boxShadow = "0 0 8px rgba(0, 255, 255, 0.2)";
-        playerBox.style.transform = "scale(1)";
-        playerBox.classList.remove("rainbow-beat");
-      }
-    }
+  analyser.getByteFrequencyData(dataArray);
 
-    detectBeat();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
+  const radius = Math.min(centerX, centerY) / 2;
+  const bars = 64;
+
+  for (let i = 0; i < bars; i++) {
+    const angle = (i / bars) * Math.PI * 2;
+    const barLength = dataArray[i] / 1.5;
+    const x1 = centerX + Math.cos(angle) * radius;
+    const y1 = centerY + Math.sin(angle) * radius;
+    const x2 = centerX + Math.cos(angle) * (radius + barLength);
+    const y2 = centerY + Math.sin(angle) * (radius + barLength);
+
+    ctx.strokeStyle = `hsl(${i * 6}, 100%, 50%)`;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
   }
+}
 
-  audio.addEventListener("play", () => {
-    if (!audioCtx) {
-      setupBeatVisualizer();
-    } else {
-      audioCtx.resume();
-    }
-  });
+audio.addEventListener("play", () => {
+  if (!audioContext) setupAudioVisualizer();
 });
 
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
