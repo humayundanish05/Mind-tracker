@@ -303,28 +303,10 @@ entry.target.classList.add("visible");
 document.querySelectorAll(".section").forEach((sec) => observer.observe(sec));
 
 // 🎨 Canvas Visualizer
-// 🎨 Canvas Visualizer (Attractive Circular Glow, Same HTML Structure)
-
 const canvas = document.createElement("canvas");
 canvas.id = "visualizerCanvas";
 document.body.appendChild(canvas);
-
 const ctx = canvas.getContext("2d");
-
-canvas.style.position = "fixed";
-canvas.style.top = "0";
-canvas.style.left = "0";
-canvas.style.width = "100vw";
-canvas.style.height = "100vh";
-canvas.style.zIndex = "-1";
-canvas.style.pointerEvents = "none";
-
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
 
 let audioContext;
 let analyser;
@@ -333,58 +315,58 @@ let dataArray;
 let bufferLength;
 
 function setupAudioVisualizer() {
-  audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  analyser = audioContext.createAnalyser();
-  sourceNode = audioContext.createMediaElementSource(audio);
-  sourceNode.connect(analyser);
-  analyser.connect(audioContext.destination);
-  analyser.fftSize = 256;
-  bufferLength = analyser.frequencyBinCount;
-  dataArray = new Uint8Array(bufferLength);
-  drawVisualizer();
+audioContext = new (window.AudioContext || window.webkitAudioContext)();
+analyser = audioContext.createAnalyser();
+sourceNode = audioContext.createMediaElementSource(audio);
+sourceNode.connect(analyser);
+analyser.connect(audioContext.destination);
+analyser.fftSize = 256;
+bufferLength = analyser.frequencyBinCount;
+dataArray = new Uint8Array(bufferLength);
+drawVisualizer();
 }
 
 function drawVisualizer() {
-  requestAnimationFrame(drawVisualizer);
-  analyser.getByteFrequencyData(dataArray);
+requestAnimationFrame(drawVisualizer);
+analyser.getByteFrequencyData(dataArray);
 
-  const width = canvas.width;
-  const height = canvas.height;
-  ctx.clearRect(0, 0, width, height);
+ctx.clearRect(0, 0, canvas.width, canvas.height);  
 
-  const centerX = width / 2;
-  const centerY = height / 2;
-  const radius = Math.min(centerX, centerY) / 2.5;
-  const bars = 128;
+const centerX = canvas.width / 2;  
+const centerY = canvas.height / 2;  
+const radius = Math.min(centerX, centerY) / 2;  
+const bars = 64;  
 
-  for (let i = 0; i < bars; i++) {
-    const angle = (i / bars) * Math.PI * 2;
-    const barLength = dataArray[i] * 1.1;
+for (let i = 0; i < bars; i++) {  
+  const angle = (i / bars) * Math.PI * 2;  
+  const barLength = dataArray[i] / 1.5;  
+  const x1 = centerX + Math.cos(angle) * radius;  
+  const y1 = centerY + Math.sin(angle) * radius;  
+  const x2 = centerX + Math.cos(angle) * (radius + barLength);  
+  const y2 = centerY + Math.sin(angle) * (radius + barLength);  
 
-    const x1 = centerX + Math.cos(angle) * radius;
-    const y1 = centerY + Math.sin(angle) * radius;
-    const x2 = centerX + Math.cos(angle) * (radius + barLength);
-    const y2 = centerY + Math.sin(angle) * (radius + barLength);
-
-    const gradient = ctx.createLinearGradient(x1, y1, x2, y2);
-    gradient.addColorStop(0, `hsl(${i * 3}, 100%, 60%)`);
-    gradient.addColorStop(1, `hsl(${(i * 3 + 60) % 360}, 100%, 40%)`);
-
-    ctx.strokeStyle = gradient;
-    ctx.lineWidth = 2.5;
-    ctx.shadowBlur = 12;
-    ctx.shadowColor = gradient;
-
-    ctx.beginPath();
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(x2, y2);
-    ctx.stroke();
-  }
+  ctx.strokeStyle = `hsl(${i * 6}, 100%, 50%)`;  
+  ctx.lineWidth = 2;  
+  ctx.beginPath();  
+  ctx.moveTo(x1, y1);  
+  ctx.lineTo(x2, y2);  
+  ctx.stroke();  
 }
 
-// 🔊 Activate when audio plays
+}
+
 audio.addEventListener("play", () => {
-  if (!audioContext) {
-    setupAudioVisualizer();
-  }
+if (!audioContext) {
+setupAudioVisualizer();
+}
 });
+
+window.addEventListener("resize", () => {
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+});
+
+
+
+    canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
