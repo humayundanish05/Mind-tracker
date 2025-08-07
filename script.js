@@ -182,7 +182,7 @@ let currentTrackIndex = 0;
 function formatTime(seconds) {
 const min = Math.floor(seconds / 60).toString().padStart(2, "0");
 const sec = Math.floor(seconds % 60).toString().padStart(2, "0");
-return ${min}:${sec};
+return `${min}:${sec}`;
 }
 
 function loadTrack(index) {
@@ -251,9 +251,9 @@ loadTrack(0); // Start first track
 document.querySelectorAll("button").forEach((btn) => {
 btn.addEventListener("click", () => {
 const color = getRandomGlowColor();
-btn.style.boxShadow = 0 0 25px 10px ${color};
+btn.style.boxShadow = `0 0 25px 10px ${color}`;
 setTimeout(() => {
-btn.style.boxShadow = 0 0 10px ${color};
+  btn.style.boxShadow = `0 0 10px ${color}`;
 }, 1500);
 });
 });
@@ -273,12 +273,13 @@ return colors[Math.floor(Math.random() * colors.length)];
 
 // 📊 Scroll Progress Bar
 window.addEventListener("scroll", () => {
-const scrollBar = document.getElementById("scrollBar");
-const totalHeight = document.body.scrollHeight - window.innerHeight;
-const scrolled = (window.scrollY / totalHeight) * 100;
-scrollBar.style.width = ${scrolled}%;
+  const scrollBar = document.getElementById("scrollBar");
+  const totalHeight = document.body.scrollHeight - window.innerHeight;
+  const scrolled = (window.scrollY / totalHeight) * 100;
+  scrollBar.style.width = `${scrolled}%`;
 });
 
+  
 // 🌓 Mode Toggle
 const modeToggle = document.getElementById("modeToggle");
 if (modeToggle) {
