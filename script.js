@@ -299,68 +299,96 @@ window.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".section").forEach((sec) => observer.observe(sec));
 
   // 🎨 Canvas Visualizer
-  const canvas = document.createElement("canvas");
-  canvas.id = "visualizerCanvas";
-  document.body.appendChild(canvas);
-  const ctx = canvas.getContext("2d");
+// 🎨 Realistic Canvas Audio Visualizer with Glow and Sync Effects
 
-  let audioContext;
-  let analyser;
-  let sourceNode;
-  let dataArray;
-  let bufferLength;
+const canvas = document.createElement("canvas");
+canvas.id = "visualizerCanvas";
+document.body.appendChild(canvas);
+const ctx = canvas.getContext("2d");
 
-  function setupAudioVisualizer() {
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    analyser = audioContext.createAnalyser();
-    sourceNode = audioContext.createMediaElementSource(audio);
-    sourceNode.connect(analyser);
-    analyser.connect(audioContext.destination);
-    analyser.fftSize = 256;
-    bufferLength = analyser.frequencyBinCount;
-    dataArray = new Uint8Array(bufferLength);
-    drawVisualizer();
+let audioContext;
+let analyser;
+let sourceNode;
+let dataArray;
+let bufferLength;
+
+// Set canvas resolution to high DPI
+function resizeCanvas() {
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = window.innerWidth * dpr;
+  canvas.height = window.innerHeight * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+function setupAudioVisualizer() {
+  audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  analyser = audioContext.createAnalyser();
+  analyser.fftSize = 256;
+  bufferLength = analyser.frequencyBinCount;
+  dataArray = new Uint8Array(bufferLength);
+
+  sourceNode = audioContext.createMediaElementSource(audio);
+  sourceNode.connect(analyser);
+  analyser.connect(audioContext.destination);
+
+  drawVisualizer();
+}
+
+function drawVisualizer() {
+  requestAnimationFrame(drawVisualizer);
+  analyser.getByteFrequencyData(dataArray);
+
+  // Motion trail blur effect
+  ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
+  const radius = Math.min(centerX, centerY) / 3;
+  const bars = 64;
+
+  // Calculate average amplitude for pulse effect
+  const average = dataArray.slice(0, bars).reduce((a, b) => a + b, 0) / bars;
+
+  // Draw center pulse
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, radius / 2 + average / 6, 0, 2 * Math.PI);
+  ctx.fillStyle = `rgba(255, 255, 255, ${0.02 + average / 512})`;
+  ctx.shadowBlur = 50;
+  ctx.shadowColor = "white";
+  ctx.fill();
+
+  for (let i = 0; i < bars; i++) {
+    const angle = (i / bars) * Math.PI * 2;
+    const barLength = dataArray[i] * 1.2;
+
+    const x1 = centerX + Math.cos(angle) * radius;
+    const y1 = centerY + Math.sin(angle) * radius;
+    const x2 = centerX + Math.cos(angle) * (radius + barLength);
+    const y2 = centerY + Math.sin(angle) * (radius + barLength);
+
+    // Create a gradient stroke
+    const gradient = ctx.createLinearGradient(x1, y1, x2, y2);
+    gradient.addColorStop(0, `hsl(${i * 5}, 100%, 70%)`);
+    gradient.addColorStop(1, `hsl(${i * 5}, 100%, 50%)`);
+
+    ctx.strokeStyle = gradient;
+    ctx.lineWidth = 3;
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = `hsl(${i * 5}, 100%, 60%)`;
+
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
   }
+}
 
-  function drawVisualizer() {
-    requestAnimationFrame(drawVisualizer);
-    analyser.getByteFrequencyData(dataArray);
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
-    const radius = Math.min(centerX, centerY) / 2;
-    const bars = 64;
-
-    for (let i = 0; i < bars; i++) {
-      const angle = (i / bars) * Math.PI * 2;
-      const barLength = dataArray[i] / 1.5;
-      const x1 = centerX + Math.cos(angle) * radius;
-      const y1 = centerY + Math.sin(angle) * radius;
-      const x2 = centerX + Math.cos(angle) * (radius + barLength);
-      const y2 = centerY + Math.sin(angle) * (radius + barLength);
-
-      ctx.strokeStyle = `hsl(${i * 6}, 100%, 50%)`;
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(x1, y1);
-      ctx.lineTo(x2, y2);
-      ctx.stroke();
-    }
+// Ensure audio context is created on user interaction
+audio.addEventListener("play", () => {
+  if (!audioContext) {
+    setupAudioVisualizer();
   }
-
-  audio.addEventListener("play", () => {
-    if (!audioContext) {
-      setupAudioVisualizer();
-    }
-  });
-
-  window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  });
-
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
 });
