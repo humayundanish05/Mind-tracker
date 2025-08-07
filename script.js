@@ -303,6 +303,7 @@ entry.target.classList.add("visible");
 document.querySelectorAll(".section").forEach((sec) => observer.observe(sec));
 
 // 🎨 Canvas Visualizer
+
 const canvas = document.createElement("canvas");
 canvas.id = "visualizerCanvas";
 document.body.appendChild(canvas);
@@ -370,3 +371,4 @@ canvas.height = window.innerHeight;
 
     canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+});
