@@ -161,215 +161,231 @@ function resetTimer() {
 
 // 🎧 Custom Audio Player Setup
   
-
-// 🎧 Custom Audio Player Setup
+// 🎧 Custom Audio Player Setup + Visualizer
 window.addEventListener("DOMContentLoaded", () => {
-const audio = document.getElementById("audio");
-const playPauseBtn = document.getElementById("playPauseBtn");
-const seekBar = document.getElementById("seekBar");
-const currentTimeEl = document.getElementById("currentTime");
-const durationEl = document.getElementById("duration");
-const rewindBtn = document.getElementById("rewind");
-const forwardBtn = document.getElementById("forward");
-const loopBtn = document.getElementById("loopBtn");
-const volumeSlider = document.getElementById("volumeSlider");
-const nextTrackBtn = document.getElementById("nextTrack");
-const prevTrackBtn = document.getElementById("prevTrack");
+  const audio = document.getElementById("audio");
+  const playPauseBtn = document.getElementById("playPauseBtn");
+  const seekBar = document.getElementById("seekBar");
+  const currentTimeEl = document.getElementById("currentTime");
+  const durationEl = document.getElementById("duration");
+  const rewindBtn = document.getElementById("rewind");
+  const forwardBtn = document.getElementById("forward");
+  const loopBtn = document.getElementById("loopBtn");
+  const volumeSlider = document.getElementById("volumeSlider");
+  const nextTrackBtn = document.getElementById("nextTrack");
+  const prevTrackBtn = document.getElementById("prevTrackBtn");
 
-const playlist = ["Music6.mp3", "music5.mp3", "Music4.mp3"];
-let currentTrackIndex = 0;
+  const playlist = ["Music6.mp3", "music5.mp3", "Music4.mp3"];
+  let currentTrackIndex = 0;
 
-function formatTime(seconds) {
-const min = Math.floor(seconds / 60).toString().padStart(2, "0");
-const sec = Math.floor(seconds % 60).toString().padStart(2, "0");
-return `${min}:${sec}`;
-}
+  function formatTime(seconds) {
+    const min = Math.floor(seconds / 60).toString().padStart(2, "0");
+    const sec = Math.floor(seconds % 60).toString().padStart(2, "0");
+    return `${min}:${sec}`;
+  }
 
-function loadTrack(index) {
-if (index >= 0 && index < playlist.length) {
-currentTrackIndex = index;
-audio.src = playlist[currentTrackIndex];
-audio.play();
-playPauseBtn.textContent = "⏸️";
-}
-}
+  function loadTrack(index) {
+    if (index >= 0 && index < playlist.length) {
+      currentTrackIndex = index;
+      audio.src = playlist[currentTrackIndex];
+      audio.play();
+      playPauseBtn.textContent = "⏸️";
+    }
+  }
 
-playPauseBtn.addEventListener("click", () => {
-if (audio.paused) {
-audio.play();
-playPauseBtn.textContent = "⏸️";
-} else {
-audio.pause();
-playPauseBtn.textContent = "▶️";
-}
+  playPauseBtn.addEventListener("click", () => {
+    if (audio.paused) {
+      audio.play();
+      playPauseBtn.textContent = "⏸️";
+    } else {
+      audio.pause();
+      playPauseBtn.textContent = "▶️";
+    }
+  });
+
+  rewindBtn.addEventListener("click", () => {
+    audio.currentTime = Math.max(0, audio.currentTime - 10);
+  });
+
+  forwardBtn.addEventListener("click", () => {
+    audio.currentTime = Math.min(audio.duration, audio.currentTime + 10);
+  });
+
+  loopBtn.addEventListener("click", () => {
+    audio.loop = !audio.loop;
+    loopBtn.style.backgroundColor = audio.loop ? "#00adb5" : "";
+  });
+
+  nextTrackBtn.addEventListener("click", () => {
+    const next = (currentTrackIndex + 1) % playlist.length;
+    loadTrack(next);
+  });
+
+  prevTrackBtn.addEventListener("click", () => {
+    const prev = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+    loadTrack(prev);
+  });
+
+  volumeSlider.addEventListener("input", () => {
+    audio.volume = parseFloat(volumeSlider.value);
+  });
+
+  audio.addEventListener("loadedmetadata", () => {
+    seekBar.max = Math.floor(audio.duration);
+    durationEl.textContent = formatTime(audio.duration);
+  });
+
+  audio.addEventListener("timeupdate", () => {
+    seekBar.value = Math.floor(audio.currentTime);
+    currentTimeEl.textContent = formatTime(audio.currentTime);
+  });
+
+  seekBar.addEventListener("input", () => {
+    audio.currentTime = seekBar.value;
+  });
+
+  loadTrack(0); // Start first track
+
+  // 🌈 Button Glow Effect
+  document.querySelectorAll("button").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const color = getRandomGlowColor();
+      btn.style.boxShadow = `0 0 25px 10px ${color}`;
+      setTimeout(() => {
+        btn.style.boxShadow = `0 0 10px ${color}`;
+      }, 1500);
+    });
+  });
+
+  function getRandomGlowColor() {
+    const colors = [
+      "rgba(255, 99, 132, 0.8)",
+      "rgba(54, 162, 235, 0.8)",
+      "rgba(255, 206, 86, 0.8)",
+      "rgba(75, 192, 192, 0.8)",
+      "rgba(153, 102, 255, 0.8)",
+      "rgba(255, 159, 64, 0.8)",
+      "rgba(0, 255, 140, 0.8)"
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+
+  // 📊 Scroll Progress Bar
+  window.addEventListener("scroll", () => {
+    const scrollBar = document.getElementById("scrollBar");
+    const totalHeight = document.body.scrollHeight - window.innerHeight;
+    const scrolled = (window.scrollY / totalHeight) * 100;
+    scrollBar.style.width = `${scrolled}%`;
+  });
+
+  // 🌓 Mode Toggle
+  const modeToggle = document.getElementById("modeToggle");
+  if (modeToggle) {
+    modeToggle.addEventListener("change", (e) => {
+      document.body.classList.toggle("light-mode", e.target.checked);
+    });
+  }
+
+  // 👁️ Fade In Sections on Scroll
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  document.querySelectorAll(".section").forEach((sec) => observer.observe(sec));
+
+  // 🎨 Canvas Visualizer
+  const canvas = document.createElement("canvas");
+  canvas.id = "visualizerCanvas";
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext("2d");
+
+  let audioContext;
+  let analyser;
+  let sourceNode;
+  let dataArray;
+  let bufferLength;
+
+  function resizeCanvas() {
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
+
+  function setupAudioVisualizer() {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    analyser = audioContext.createAnalyser();
+    analyser.fftSize = 256;
+    bufferLength = analyser.frequencyBinCount;
+    dataArray = new Uint8Array(bufferLength);
+
+    sourceNode = audioContext.createMediaElementSource(audio);
+    sourceNode.connect(analyser);
+    analyser.connect(audioContext.destination);
+
+    drawVisualizer();
+  }
+
+  function drawVisualizer() {
+    requestAnimationFrame(drawVisualizer);
+    analyser.getByteFrequencyData(dataArray);
+
+    ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const radius = Math.min(centerX, centerY) / 3;
+    const bars = 64;
+
+    const average = dataArray.slice(0, bars).reduce((a, b) => a + b, 0) / bars;
+
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius / 2 + average / 6, 0, 2 * Math.PI);
+    ctx.fillStyle = `rgba(255, 255, 255, ${0.02 + average / 512})`;
+    ctx.shadowBlur = 50;
+    ctx.shadowColor = "white";
+    ctx.fill();
+
+    for (let i = 0; i < bars; i++) {
+      const angle = (i / bars) * Math.PI * 2;
+      const barLength = dataArray[i] * 1.2;
+
+      const x1 = centerX + Math.cos(angle) * radius;
+      const y1 = centerY + Math.sin(angle) * radius;
+      const x2 = centerX + Math.cos(angle) * (radius + barLength);
+      const y2 = centerY + Math.sin(angle) * (radius + barLength);
+
+      const gradient = ctx.createLinearGradient(x1, y1, x2, y2);
+      gradient.addColorStop(0, `hsl(${i * 5}, 100%, 70%)`);
+      gradient.addColorStop(1, `hsl(${i * 5}, 100%, 50%)`);
+
+      ctx.strokeStyle = gradient;
+      ctx.lineWidth = 3;
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = `hsl(${i * 5}, 100%, 60%)`;
+
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+    }
+  }
+
+  audio.addEventListener("play", () => {
+    if (!audioContext) {
+      setupAudioVisualizer();
+    } else if (audioContext.state === "suspended") {
+      audioContext.resume();
+    }
+  });
 });
-
-rewindBtn.addEventListener("click", () => {
-audio.currentTime = Math.max(0, audio.currentTime - 10);
-});
-
-forwardBtn.addEventListener("click", () => {
-audio.currentTime = Math.min(audio.duration, audio.currentTime + 10);
-});
-
-loopBtn.addEventListener("click", () => {
-audio.loop = !audio.loop;
-loopBtn.style.backgroundColor = audio.loop ? "#00adb5" : "";
-});
-
-nextTrackBtn.addEventListener("click", () => {
-const next = (currentTrackIndex + 1) % playlist.length;
-loadTrack(next);
-});
-
-prevTrackBtn.addEventListener("click", () => {
-const prev = (currentTrackIndex - 1 + playlist.length) % playlist.length;
-loadTrack(prev);
-});
-
-volumeSlider.addEventListener("input", () => {
-audio.volume = parseFloat(volumeSlider.value);
-});
-
-audio.addEventListener("loadedmetadata", () => {
-seekBar.max = Math.floor(audio.duration);
-durationEl.textContent = formatTime(audio.duration);
-});
-
-audio.addEventListener("timeupdate", () => {
-seekBar.value = Math.floor(audio.currentTime);
-currentTimeEl.textContent = formatTime(audio.currentTime);
-});
-
-seekBar.addEventListener("input", () => {
-audio.currentTime = seekBar.value;
-});
-
-loadTrack(0); // Start first track
-
-// 🌈 Button Glow Effect
-document.querySelectorAll("button").forEach((btn) => {
-btn.addEventListener("click", () => {
-const color = getRandomGlowColor();
-btn.style.boxShadow = `0 0 25px 10px ${color}`;
-setTimeout(() => {
-  btn.style.boxShadow = `0 0 10px ${color}`;
-}, 1500);
-});
-});
-
-function getRandomGlowColor() {
-const colors = [
-"rgba(255, 99, 132, 0.8)",
-"rgba(54, 162, 235, 0.8)",
-"rgba(255, 206, 86, 0.8)",
-"rgba(75, 192, 192, 0.8)",
-"rgba(153, 102, 255, 0.8)",
-"rgba(255, 159, 64, 0.8)",
-"rgba(0, 255, 140, 0.8)"
-];
-return colors[Math.floor(Math.random() * colors.length)];
-}
-
-// 📊 Scroll Progress Bar
-window.addEventListener("scroll", () => {
-  const scrollBar = document.getElementById("scrollBar");
-  const totalHeight = document.body.scrollHeight - window.innerHeight;
-  const scrolled = (window.scrollY / totalHeight) * 100;
-  scrollBar.style.width = `${scrolled}%`;
-});
-
-  
-// 🌓 Mode Toggle
-const modeToggle = document.getElementById("modeToggle");
-if (modeToggle) {
-modeToggle.addEventListener("change", (e) => {
-document.body.classList.toggle("light-mode", e.target.checked);
-});
-}
-
-// 👁️ Fade In Sections on Scroll
-const observer = new IntersectionObserver(
-(entries) => {
-entries.forEach((entry) => {
-if (entry.isIntersecting) {
-entry.target.classList.add("visible");
-}
-});
-},
-{ threshold: 0.2 }
-);
-
-document.querySelectorAll(".section").forEach((sec) => observer.observe(sec));
-
-// 🎨 Canvas Visualizer
-
-const canvas = document.createElement("canvas");
-canvas.id = "visualizerCanvas";
-document.body.appendChild(canvas);
-const ctx = canvas.getContext("2d");
-
-let audioContext;
-let analyser;
-let sourceNode;
-let dataArray;
-let bufferLength;
-
-function setupAudioVisualizer() {
-audioContext = new (window.AudioContext || window.webkitAudioContext)();
-analyser = audioContext.createAnalyser();
-sourceNode = audioContext.createMediaElementSource(audio);
-sourceNode.connect(analyser);
-analyser.connect(audioContext.destination);
-analyser.fftSize = 256;
-bufferLength = analyser.frequencyBinCount;
-dataArray = new Uint8Array(bufferLength);
-drawVisualizer();
-}
-
-function drawVisualizer() {
-requestAnimationFrame(drawVisualizer);
-analyser.getByteFrequencyData(dataArray);
-
-ctx.clearRect(0, 0, canvas.width, canvas.height);  
-
-const centerX = canvas.width / 2;  
-const centerY = canvas.height / 2;  
-const radius = Math.min(centerX, centerY) / 2;  
-const bars = 64;  
-
-for (let i = 0; i < bars; i++) {  
-  const angle = (i / bars) * Math.PI * 2;  
-  const barLength = dataArray[i] / 1.5;  
-  const x1 = centerX + Math.cos(angle) * radius;  
-  const y1 = centerY + Math.sin(angle) * radius;  
-  const x2 = centerX + Math.cos(angle) * (radius + barLength);  
-  const y2 = centerY + Math.sin(angle) * (radius + barLength);  
-
-  ctx.strokeStyle = `hsl(${i * 6}, 100%, 50%)`;  
-  ctx.lineWidth = 2;  
-  ctx.beginPath();  
-  ctx.moveTo(x1, y1);  
-  ctx.lineTo(x2, y2);  
-  ctx.stroke();  
-}
-
-}
-
-audio.addEventListener("play", () => {
-if (!audioContext) {
-setupAudioVisualizer();
-}
-});
-
-window.addEventListener("resize", () => {
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-});
-
-
-
-    canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-});
-
